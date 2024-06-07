@@ -19,7 +19,6 @@ export default function RootLayoutWrapProvider({
   useEffect(() => {
 
     if(typeof window === 'object'){
-      console.log(window.matchMedia('(prefers-color-scheme: dark)'))
       isSystemDark.current = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme(isSystemDark.current ? 'dark' : 'light');
     }
