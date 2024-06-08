@@ -23,7 +23,7 @@ export async function GET(){
 		return NextResponse.json({
 			error: errorMessage
 		}, {
-			status: 500
+			status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
 		});
 	}
 }

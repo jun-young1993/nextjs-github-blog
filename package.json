@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "juny-react-style": "^1.4.14",
+    "juny-react-style": "^1.5.17",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-github-issue": "^1.0.16",
+    "react-github-issue": "^1.0.17",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {
