@@ -2,6 +2,7 @@ import {constants} from "http2";
 import {NextResponse} from "next/server";
 import APP_CONFIG from "@/utills/config/config";
 import {GithubUserInterface} from "@/interfaces/github-user.interface";
+import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 type Params = {
     params: {
         slug?: [] | string[]
@@ -11,7 +12,7 @@ type Params = {
 export async function GET(request: Request, {params}: Params){
     try{
 
-        const path = params.slug ? params.slug.join('/') : '';
+        const path = nextSlugGitContentsPath(params.slug);
         const {
             GIT_HUB_API_URL,
             GIT_HUB_PERSONAL_REPOSITORY_NAME,

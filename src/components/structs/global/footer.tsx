@@ -13,7 +13,7 @@ function Footer() {
                 return (
                     <MacMenuBarItem
                         onClick={() => {
-                            router.push(`/repo/${path}`)
+                            router.push(`/contents/${path}`)
                         }}
                         // src={"https://avatars.githubusercontent.com/u/102360897?v=4"}
                         title={title}

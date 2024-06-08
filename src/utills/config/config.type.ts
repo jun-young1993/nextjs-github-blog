@@ -13,5 +13,6 @@ interface GithubBlogShowPath {
 }
 
 export interface GithubBlogConfigType {
+    domain: string
     githubBlogShowPaths: GithubBlogShowPath[]
 }
