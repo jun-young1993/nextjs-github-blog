@@ -2,12 +2,12 @@ import { NextResponse} from "next/server";
 import APP_CONFIG from "@/utills/config/config";
 import {constants} from "http2";
 import getUserConfig from "@/utills/config/get-user.config";
-import {GithubContentInterface} from "@/interfaces/github-user.interface";
-export async function POST(req): Promise<string>
+
+export async function POST(req: Request): Promise<Response>
 {
     const {GIT_HUB_API_URL,GIT_HUB_API_REQUEST_HEADER} = APP_CONFIG;
     const {path} = await req.json();
-    console.log("=>(route.ts:11) path", path);
+
     const DOMAIN = getUserConfig('domain')
     const getContentUrl = `${DOMAIN}/api/github/contents/${path}`;
     if(!path.endsWith('.md')){

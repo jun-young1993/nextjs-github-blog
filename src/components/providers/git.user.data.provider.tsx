@@ -1,8 +1,6 @@
 'use client';
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import { GithubUserInterface } from '@/interfaces/github-user.interface';
-import APP_CONFIG from "@/utills/config/config";
-import {ThemeContext} from "../../../../react-style/src/component/StyleThemeProvider/StyleThemeContextProvider";
 
 export interface GitUserDataContextType {
     userData: GithubUserInterface | null;
@@ -20,12 +18,9 @@ export default function UserDataProvider({ children }: { children: ReactNode }) 
     useEffect(() => {
         async function fetchData() {
                 const initialData = await getData();
-                console.log("=>(git.user.data.provider.tsx:24) request");
             setUserData(initialData);
         }
-        if(userData === null) {
             fetchData();
-        }
     }, []);
     return (
         <UserDataContext.Provider value={{ userData, setUserData }}>

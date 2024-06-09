@@ -1,7 +1,7 @@
 import {constants} from "http2";
 import {NextResponse} from "next/server";
 import APP_CONFIG from "@/utills/config/config";
-import {GithubContentInterface, GithubUserInterface} from "@/interfaces/github-user.interface";
+import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 type Params = {
     params: {
@@ -9,11 +9,11 @@ type Params = {
     }
 }
 
-export async function GET(request: Request, {params}: Params): Promise<GithubContentInterface[]>
+export async function GET(request: Request, {params}: Params): Promise<Response>
 {
     try{
 
-        const path = nextSlugGitContentsPath(params.slug);
+        const path = nextSlugGitContentsPath(params.slug ?? []);
 
         const {
             GIT_HUB_API_URL,
@@ -29,7 +29,7 @@ export async function GET(request: Request, {params}: Params): Promise<GithubCon
         if(status !== constants.HTTP_STATUS_OK){
             throw new Error(`Request failed with status ${status}: ${statusText}`);
         }
-        const result:GithubUserInterface = await response.json();
+        const result:GithubContentInterface[] | [] = await response.json();
         return NextResponse.json(result,{
             status: status
         })

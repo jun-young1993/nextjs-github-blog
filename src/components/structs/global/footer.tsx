@@ -8,8 +8,8 @@ function Footer() {
     return (
         <MacMenuBar
         >
-            {githubBlogShowPaths.map(({path,index}) => {
-                const title = path.split('/').at(-1);
+            {githubBlogShowPaths && githubBlogShowPaths.map(({path}, index) => {
+                const title  = path.split('/').at(-1);
                 return (
                     <MacMenuBarItem
                         key={path+index}
@@ -17,7 +17,7 @@ function Footer() {
                             router.push(`/contents/${path}`)
                         }}
                         // src={"https://avatars.githubusercontent.com/u/102360897?v=4"}
-                        title={title}
+                        title={title ?? 'no name'}
                     />
                 )
             })}

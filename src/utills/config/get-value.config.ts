@@ -1,8 +1,8 @@
-export function getEnv(
+export function getEnv<T>(
 	key: string,
-	defaultValue?: string,
+	defaultValue?: T,
 	env = process.env
-): string {
+): string | T {
 	const value: string | undefined = env[key]
 	if (value !== undefined) {
 		return value

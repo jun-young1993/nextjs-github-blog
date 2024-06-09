@@ -6,6 +6,7 @@ export interface AppConfigType {
     GIT_HUB_PERSONAL_REPOSITORY_NAME: string
     GIT_HUB_PERSONAL_REPOSITORY_OWNER: string
     GIT_HUB_API_REQUEST_HEADER: {[key: string]: string}
+    GOOGLE_ANALYTICS_SCRIPT_SRC?: string
 }
 
 interface GithubBlogShowPath {
@@ -13,6 +14,9 @@ interface GithubBlogShowPath {
 }
 
 export interface GithubBlogConfigType {
+    title: string
+    description: string
     domain: string
     githubBlogShowPaths: GithubBlogShowPath[]
+    userSitemap: string[] | []
 }

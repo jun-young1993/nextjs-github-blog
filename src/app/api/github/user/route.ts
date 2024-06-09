@@ -4,7 +4,7 @@ import { constants } from "http2";
 import { NextResponse } from "next/server";
 
 
-export async function GET(): Promise<GithubUserInterface>{
+export async function GET(): Promise<Response>{
 	try{
 		const url = `${APP_CONFIG.GIT_HUB_API_URL}/user`;
 		const response = await fetch(url,{

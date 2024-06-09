@@ -33,7 +33,7 @@ export default async function Page({ params }: Params){
             theme={"light"}
         >
             <div
-                className={"markdown-body"}
+                className={"markdown-body dark"}
                 dangerouslySetInnerHTML={{__html: data}}>
 
             </div>

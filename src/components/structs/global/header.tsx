@@ -23,8 +23,6 @@ function Header(){
                 : <Spinner />}
 
             </ProfileWrap>
-
-
             <DarkModeButton />
         </BetweenContainer>
     )
