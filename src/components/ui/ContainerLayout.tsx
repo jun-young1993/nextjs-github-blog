@@ -2,6 +2,8 @@
 import {ReactNode} from "react";
 import {MacContainer} from "juny-react-style";
 import styled from "styled-components";
+import {useRouter} from "next/navigation";
+
 const ContainerLayoutStyled = styled.div`
   height: calc(100% - 0.5rem);
   width: calc(100%);
@@ -9,10 +11,22 @@ const ContainerLayoutStyled = styled.div`
   justify-content: center;
   align-items: center;
 `;
-function ContainerLayout({children}: {children: ReactNode}){
+interface ContainerLayoutProps {
+    onClose?: () => void
+    children?: ReactNode
+    theme?: "light" | "dark"
+}
+function ContainerLayout({children, onClose, theme}: ContainerLayoutProps){
+    const router = useRouter();
     return (
         <ContainerLayoutStyled>
-            <MacContainer>
+            <MacContainer
+                theme={theme}
+                onClose={() => {
+                    router.push('/')
+                    console.log("=>(ContainerLayout.tsx:25) router", router);
+                }}
+            >
                 {children}
             </MacContainer>
         </ContainerLayoutStyled>

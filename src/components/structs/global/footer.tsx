@@ -1,9 +1,9 @@
 import {MacMenuBar, MacMenuBarItem} from 'juny-react-style';
-import userConfig from "../../../../github.blog.config";
 import {useRouter} from "next/navigation";
+import getUserConfig from "@/utills/config/get-user.config";
 
 function Footer() {
-    const {githubBlogShowPaths} = userConfig;
+    const githubBlogShowPaths = getUserConfig('githubBlogShowPaths');
     const router = useRouter();
     return (
         <MacMenuBar

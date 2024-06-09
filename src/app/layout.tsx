@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import 'github-markdown-css/github-markdown.css';
 import "./globals.css";
+
 import RootLayoutWrapProvider from "@/components/providers/root-rayout-wrap.provider";
 import StyleThemeProvider from "@/components/providers/style-theme.provider";
 import {ReactNode} from "react";

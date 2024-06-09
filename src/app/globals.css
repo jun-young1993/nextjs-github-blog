@@ -5,3 +5,8 @@ html, body {
 body {
     display: flex;
 }
+
+.markdown-body {
+    background-color: transparent; /* 배경색을 투명으로 설정하여 페이지 배경색과 어울리도록 함 */
+    color: inherit; /* 페이지의 텍스트 색상을 상속받도록 함 */
+}
