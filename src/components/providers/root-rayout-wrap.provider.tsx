@@ -17,7 +17,7 @@ export default function RootLayoutWrapProvider({
         <Header
 
         />
-        <main>{children}</main>
+        {children}
         <Footer />
       </Screen>
   )

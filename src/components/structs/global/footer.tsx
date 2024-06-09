@@ -8,10 +8,11 @@ function Footer() {
     return (
         <MacMenuBar
         >
-            {githubBlogShowPaths.map(({path}) => {
+            {githubBlogShowPaths.map(({path,index}) => {
                 const title = path.split('/').at(-1);
                 return (
                     <MacMenuBarItem
+                        key={path+index}
                         onClick={() => {
                             router.push(`/contents/${path}`)
                         }}
