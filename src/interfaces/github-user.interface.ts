@@ -4,7 +4,10 @@ export interface GithubUserInterface {
 }
 
 export interface GithubContentInterface {
+	sha: string
+	type: 'file'|'dir'
 	name: string
 	encoding: string
 	content: string
+	path: string
 }

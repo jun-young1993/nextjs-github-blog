@@ -19,9 +19,10 @@ export async function GET(request: Request, {params}: Params): Promise<Response>
             GIT_HUB_API_URL,
             GIT_HUB_PERSONAL_REPOSITORY_NAME,
             GIT_HUB_PERSONAL_REPOSITORY_OWNER,
-            GIT_HUB_API_REQUEST_HEADER
+            GIT_HUB_API_REQUEST_HEADER,
+            GIT_HUB_API_END_POINT,
         } = APP_CONFIG;
-        const url = `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/${path}`
+        const url = GIT_HUB_API_END_POINT.repos.contents(path);
         const response = await fetch(url,{
             headers: GIT_HUB_API_REQUEST_HEADER
         });

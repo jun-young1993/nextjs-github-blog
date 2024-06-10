@@ -4,6 +4,7 @@ import ContainerLayout from "@/components/ui/ContainerLayout";
 import ContentList from "@/components/structs/contents/content-list";
 import {redirect} from "next/navigation";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
+import APP_CONFIG from "@/utills/config/config";
 
 interface Params {
     params: {
@@ -11,8 +12,8 @@ interface Params {
     }
 }
 async function getData(path: string): Promise<{data: GithubContentInterface[]}> {
-    const DOMAIN = getUserConfig('domain')
-    const url = `${DOMAIN}/api/github/contents/${path}`;
+    const {APP_END_POINT} = APP_CONFIG;
+    const url = APP_END_POINT.repos.contents(path);
     if(url.endsWith('.md')){
         redirect(`/markdown-viewer/${path}`);
     }

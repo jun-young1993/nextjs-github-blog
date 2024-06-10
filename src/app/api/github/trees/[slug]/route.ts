@@ -2,14 +2,21 @@ import { GithubUserInterface } from "@/interfaces/github-user.interface";
 import APP_CONFIG from "@/utills/config/config";
 import { constants } from "http2";
 import { NextResponse } from "next/server";
+type Params = {
+	params: {
+		slug: string
+	}
+}
 
-
-export async function GET(): Promise<Response>{
+export async function GET(request: Request, {params}: Params): Promise<Response>{
 	try{
-		const {GIT_HUB_API_URL} = APP_CONFIG;
-		const url = `${GIT_HUB_API_URL}/user`;
+		const {
+			GIT_HUB_API_REQUEST_HEADER,
+			GIT_HUB_API_END_POINT
+		    } = APP_CONFIG;
+		const url = GIT_HUB_API_END_POINT.repos.trees(params.slug);
 		const response = await fetch(url,{
-			headers: APP_CONFIG.GIT_HUB_API_REQUEST_HEADER
+			headers: GIT_HUB_API_REQUEST_HEADER
 		});
 		const {status, statusText } = response;
 		if(status !== constants.HTTP_STATUS_OK){
