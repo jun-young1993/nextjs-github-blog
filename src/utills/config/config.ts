@@ -30,7 +30,16 @@ const APP_CONFIG: AppConfigType = {
             },
             trees: (treeSha: string) => {
                 return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/git/trees/${treeSha}`;
+            },
+            readme: (repo: string) => {
+                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${repo}/readme`
             }
+        },
+        markdown: () => {
+            return `${GIT_HUB_API_URL}/markdown`
+        },
+        user: () => {
+            return `${GIT_HUB_API_URL}/user`
         }
     },
     APP_END_POINT: {
@@ -40,6 +49,9 @@ const APP_CONFIG: AppConfigType = {
             },
             trees: (treeSha: string) => {
                 return `${SITE_DOMAIN}/api/github/trees/${treeSha}`;
+            },
+            readme: (repo: string) => {
+                return `${SITE_DOMAIN}/api/github/readme/${repo}`
             }
         }   
     }

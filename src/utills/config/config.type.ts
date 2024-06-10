@@ -11,12 +11,16 @@ export interface AppConfigType {
         repos: {
             contents: (path: string) => string
             trees: (treeSha: string) => string
-        }
+            readme: (repo: string) => string
+        },
+        markdown: () => string
+        user: () => string
     }
     APP_END_POINT: {
         repos: {
             contents: (path: string) => string
             trees: (treeSha: string) => string
+            readme: (repo: string) => string
         }
     }
 }

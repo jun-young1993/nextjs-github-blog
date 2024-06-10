@@ -3,6 +3,7 @@ import {ReactNode} from "react";
 import {LightTheme, MacContainer} from "juny-react-style";
 import styled from "styled-components";
 import {useRouter} from "next/navigation";
+import ThemeType from "juny-react-style/dist/mjs/component/StyleThemeProvider/Theme.type";
 
 const ContainerLayoutWrapStyled = styled.div`
     width: 100%;
@@ -21,7 +22,7 @@ const ContainerLayoutStyled = styled.div`
 interface ContainerLayoutProps {
     onClose?: () => void
     children?: ReactNode
-    theme?: "light" | "dark"
+    theme?: ThemeType
 }
 function ContainerLayout({children, onClose, theme}: ContainerLayoutProps){
     const router = useRouter();
@@ -29,10 +30,8 @@ function ContainerLayout({children, onClose, theme}: ContainerLayoutProps){
         <ContainerLayoutWrapStyled>
         <ContainerLayoutStyled>
             <MacContainer
-                theme={LightTheme}
                 onClose={() => {
                     router.push('/')
-                    console.log("=>(ContainerLayout.tsx:25) router", router);
                 }}
             >
                 {children}

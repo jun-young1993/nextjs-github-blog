@@ -12,6 +12,7 @@ import {GOOGLE_AD_SENSE_SCRIPT_SRC, GOOGLE_ANALYTICS_G_ID} from "@/utills/config
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from "next/script";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,13 +31,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserDataProvider>
-          <StyleThemeProvider>
-            <RootLayoutWrapProvider>
-              {children}
-            </RootLayoutWrapProvider>
-          </StyleThemeProvider>
-        </UserDataProvider>
+          <UserDataProvider>
+            <StyleThemeProvider>
+              <RootLayoutWrapProvider>
+                {children}
+              </RootLayoutWrapProvider>
+            </StyleThemeProvider>
+          </UserDataProvider>
       </body>
       {GOOGLE_ANALYTICS_G_ID &&
           <GoogleAnalytics gaId={GOOGLE_ANALYTICS_G_ID}/>}

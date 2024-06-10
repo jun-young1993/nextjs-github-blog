@@ -8,7 +8,7 @@ import APP_CONFIG from "@/utills/config/config";
 
 interface Params {
     params: {
-        slug?: string[] | []
+        paths?: string[] | []
     }
 }
 async function getData(path: string): Promise<{data: GithubContentInterface[]}> {
@@ -25,8 +25,8 @@ async function getData(path: string): Promise<{data: GithubContentInterface[]}> 
     }
 }
 export default async function Page({ params }:Params) {
-    const path = nextSlugGitContentsPath(params.slug);
-    const paths = nextSlugGeneratePaths(params.slug);
+    const path = nextSlugGitContentsPath(params.paths);
+    const paths = nextSlugGeneratePaths(params.paths);
 
     const {data} = await getData(path);
 

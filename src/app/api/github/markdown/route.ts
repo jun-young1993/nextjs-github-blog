@@ -5,7 +5,7 @@ import getUserConfig from "@/utills/config/get-user.config";
 
 export async function POST(req: Request): Promise<Response>
 {
-    const {GIT_HUB_API_URL,GIT_HUB_API_REQUEST_HEADER} = APP_CONFIG;
+    const {GIT_HUB_API_REQUEST_HEADER, GIT_HUB_API_END_POINT} = APP_CONFIG;
     const {path} = await req.json();
 
     const DOMAIN = getUserConfig('domain')
@@ -17,9 +17,7 @@ export async function POST(req: Request): Promise<Response>
     const result = await contentResponse.json();
     const text = Buffer.from(result.content, result.encoding).toString('utf8');
 
-
-    const url = `${GIT_HUB_API_URL}/markdown`
-    const response = await fetch(url,{
+    const response = await fetch(GIT_HUB_API_END_POINT.markdown(),{
         method: "POST",
         headers: GIT_HUB_API_REQUEST_HEADER,
         body: JSON.stringify({text: text})

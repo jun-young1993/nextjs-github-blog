@@ -5,7 +5,7 @@ import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 type Params = {
     params: {
-        slug?: [] | string[]
+        paths?: [] | string[]
     }
 }
 
@@ -13,12 +13,9 @@ export async function GET(request: Request, {params}: Params): Promise<Response>
 {
     try{
 
-        const path = nextSlugGitContentsPath(params.slug ?? []);
+        const path = nextSlugGitContentsPath(params.paths ?? []);
 
         const {
-            GIT_HUB_API_URL,
-            GIT_HUB_PERSONAL_REPOSITORY_NAME,
-            GIT_HUB_PERSONAL_REPOSITORY_OWNER,
             GIT_HUB_API_REQUEST_HEADER,
             GIT_HUB_API_END_POINT,
         } = APP_CONFIG;
@@ -28,6 +25,7 @@ export async function GET(request: Request, {params}: Params): Promise<Response>
         });
         const {status, statusText } = response;
         if(status !== constants.HTTP_STATUS_OK){
+
             throw new Error(`Request failed with status ${status}: ${statusText}`);
         }
         const result:GithubContentInterface[] | [] = await response.json();

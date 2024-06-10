@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response>{
 	try{
-		const {GIT_HUB_API_URL} = APP_CONFIG;
-		const url = `${GIT_HUB_API_URL}/user`;
-		const response = await fetch(url,{
+		const {GIT_HUB_API_END_POINT} = APP_CONFIG;
+
+		const response = await fetch(GIT_HUB_API_END_POINT.user(),{
 			headers: APP_CONFIG.GIT_HUB_API_REQUEST_HEADER
 		});
 		const {status, statusText } = response;

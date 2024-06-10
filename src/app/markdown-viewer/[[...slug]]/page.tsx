@@ -2,7 +2,6 @@ import ContainerLayout from "@/components/ui/ContainerLayout";
 import getUserConfig from "@/utills/config/get-user.config";
 import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 
-
 interface Params {
     params: {
         slug?: string[] | []
@@ -30,13 +29,11 @@ export default async function Page({ params }: Params){
 
     return (
         <ContainerLayout
-            theme={"light"}
         >
-            <div
+            <article
                 className={"markdown-body dark"}
                 dangerouslySetInnerHTML={{__html: data}}>
-
-            </div>
+            </article>
         </ContainerLayout>
 
     )

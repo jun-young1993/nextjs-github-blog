@@ -11,7 +11,7 @@ const userConfig = GithubBlogConfig({
     githubBlogShowPaths:[{
         type: 'profile',
         src: GithubBlogShowPathSrc.GIT_AVATAR,
-        path: 'jun-young1993' // git owner name
+        path: 'jun-young1993' // git repository name
     },{
         type: 'contents',
         path: 'blog'
