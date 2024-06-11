@@ -29,6 +29,11 @@ export async function GET(request: Request, {params}: Params): Promise<Response>
             content: markdownContent
         });
     }catch(error){
-
+		const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+		return NextResponse.json({
+			error: errorMessage
+		}, {
+			status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
+		});
     }
 }
