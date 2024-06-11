@@ -1,9 +1,9 @@
 'use client'
 import {ReactNode} from "react";
-import {LightTheme, MacContainer} from "juny-react-style";
+import {LightTheme, MacContainer, useTheme} from "juny-react-style";
 import styled from "styled-components";
 import {useRouter} from "next/navigation";
-import ThemeType from "juny-react-style/dist/mjs/component/StyleThemeProvider/Theme.type";
+
 
 const ContainerLayoutWrapStyled = styled.div`
     width: 100%;
@@ -22,10 +22,11 @@ const ContainerLayoutStyled = styled.div`
 interface ContainerLayoutProps {
     onClose?: () => void
     children?: ReactNode
-    theme?: ThemeType
+    theme?: any
 }
-function ContainerLayout({children, onClose, theme}: ContainerLayoutProps){
+function ContainerLayout({children, onClose}: ContainerLayoutProps){
     const router = useRouter();
+    const {theme} = useTheme();
     return (
         <ContainerLayoutWrapStyled>
         <ContainerLayoutStyled>
@@ -34,7 +35,11 @@ function ContainerLayout({children, onClose, theme}: ContainerLayoutProps){
                     router.push('/')
                 }}
             >
-                {children}
+                <article
+                    className={`markdown-body ${theme}-mode`}
+                >
+                    {children}
+                </article>
             </MacContainer>
         </ContainerLayoutStyled>
         </ContainerLayoutWrapStyled>

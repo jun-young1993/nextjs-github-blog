@@ -21,7 +21,6 @@ export default async function Page({params}: Params){
 	return(
 		<ContainerLayout>
 			<article
-				className={"markdown-body dark"}
 				dangerouslySetInnerHTML={{__html: content}}>
 			</article>
 		</ContainerLayout>
