@@ -35,8 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
-# blog config
-github.blog.config.ts
 ./history
 ./.idea
