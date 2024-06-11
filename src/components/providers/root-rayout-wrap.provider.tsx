@@ -12,6 +12,7 @@ export default function RootLayoutWrapProvider({
 }) {
   return (
       <Screen
+          overflow={"auto"}
           footerGap={"1rem"}
       >
         <Header

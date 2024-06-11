@@ -1,6 +1,6 @@
 'use client'
 import {ReactNode} from "react";
-import {LightTheme, MacContainer, useTheme} from "juny-react-style";
+import { MacContainer, useTheme} from "juny-react-style";
 import styled from "styled-components";
 import {useRouter} from "next/navigation";
 
@@ -31,6 +31,7 @@ function ContainerLayout({children, onClose}: ContainerLayoutProps){
         <ContainerLayoutWrapStyled>
         <ContainerLayoutStyled>
             <MacContainer
+                overflow="auto"
                 onClose={() => {
                     router.push('/')
                 }}

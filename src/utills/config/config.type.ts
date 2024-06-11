@@ -38,6 +38,7 @@ export interface GithubBlogConfigType {
     title: string
     description: string
     domain: string
+    mainPage?: GithubBlogShowPath,
     git: {
         repository: string,
         owner: string

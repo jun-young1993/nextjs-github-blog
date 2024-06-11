@@ -14,10 +14,7 @@ const userConfig = GithubBlogConfig({
         path: 'jun-young1993' // git repository name
     },{
         type: 'contents',
-        path: 'blog'
-    },{
-        type: 'contents',
-        path: 'blog/Driverse'
+        path: 'blog/docs'
     }],
     userSitemap: [
         'ads.txt'
