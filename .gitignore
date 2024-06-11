@@ -37,6 +37,6 @@ next-env.d.ts
 
 
 # blog config
-./github.blog.config.ts
+github.blog.config.ts
 ./history
 ./.idea
