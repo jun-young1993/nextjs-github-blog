@@ -23,15 +23,20 @@ interface ContainerLayoutProps {
     onClose?: () => void
     children?: ReactNode
     theme?: any
+    title?: string | ReactNode
 }
-function ContainerLayout({children, onClose}: ContainerLayoutProps){
+function ContainerLayout({children, title, onClose}: ContainerLayoutProps){
     const router = useRouter();
     const {theme} = useTheme();
+    
     return (
         <ContainerLayoutWrapStyled>
         <ContainerLayoutStyled>
             <MacContainer
-                overflow="auto"
+                header={{
+                    title:<>{title}</>
+                }}
+                overflow="hidden"
                 onClose={() => {
                     router.push('/')
                 }}

@@ -1,7 +1,7 @@
 import { BetweenContainer} from "juny-react-style";
 import DarkModeButton from "@/components/ui/DarkModeButton";
 import {useGithubUser} from "@/components/providers/git.user.data.provider";
-import {Profile, Spinner} from "juny-react-style";
+import {Profile, Spinner, TextBox} from "juny-react-style";
 import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,7 +26,9 @@ function Header(){
                             src={userData.avatar_url}
                         />
                     </Link>
-                    {userData.login}
+                    <TextBox>
+                        {userData.login}
+                    </TextBox>
                     </>
                 : <Spinner />}
             </ProfileWrap>

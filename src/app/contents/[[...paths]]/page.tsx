@@ -6,11 +6,12 @@ import {redirect} from "next/navigation";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import APP_CONFIG from "@/utills/config/config";
 
-interface Params {
+export interface Params {
     params: {
         paths?: string[] | []
-    }
+    },
 }
+
 async function getData(path: string): Promise<{data: GithubContentInterface[]}> {
     const {APP_END_POINT} = APP_CONFIG;
     const url = APP_END_POINT.repos.contents(path);

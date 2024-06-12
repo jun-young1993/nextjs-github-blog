@@ -4,6 +4,8 @@ import {useRouter} from "next/navigation";
 import styled from "styled-components";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import {Fragment} from "react";
+import { GithubBlogShowPathTypeEnum } from "@/utills/config/config.type";
+import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
 
 interface ContentListProps  {
     paths?: string[] | []
@@ -19,27 +21,7 @@ function ContentList({paths, data}: ContentListProps){
 
     return <TreeList
         title={(
-            <TitleWrapStyled>
-                {
-                    paths &&
-                    paths.map((path, index) => {
-                        return (
-                            <Fragment
-                                key={path+index}
-                            >
-                                {(index > 0) && <span>{`\u202F/\u202F`}</span>}
-                                <TreeHeader
-                                    onClick={() => {
-                                        router.push(`/contents/${path}`);
-                                    }}
-                                >
-                                    {path.split('/').at(-1)}
-                                </TreeHeader>
-                            </Fragment>
-                        )
-                    })
-                }
-            </TitleWrapStyled>
+            <SplitLinkTitle paths={paths} />
         )}
         onClick={(item) => {
             if(item.userData){

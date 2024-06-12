@@ -8,7 +8,7 @@ import Footer from "@/components/structs/global/footer";
 export default function RootLayoutWrapProvider({
   children,
 }: {
-  children: ReactNode
+  children: ReactNode | any
 }) {
   return (
       <Screen

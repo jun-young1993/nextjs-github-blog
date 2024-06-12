@@ -1,10 +1,17 @@
 import ContainerLayout from "@/components/ui/ContainerLayout";
+import MarkDownHeadTitle from "@/components/ui/MarkDownHeadTitle";
+import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
+import { GithubBlogShowPathTypeEnum } from "@/utills/config/config.type";
 import getUserConfig from "@/utills/config/get-user.config";
-import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
+import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
+import Link from "next/link";
+import { Fragment } from "react";
 
-interface Params {
+
+
+export interface Params {
     params: {
-        slug?: string[] | []
+        paths?: string[] | []
     }
 }
 async function getData(path: string): Promise<{data: string}> {
@@ -23,17 +30,26 @@ async function getData(path: string): Promise<{data: string}> {
 }
 
 export default async function Page({ params }: Params){
-    const path = nextSlugGitContentsPath(params.slug);
+    const path = nextSlugGitContentsPath(params.paths);
     const {data} = await getData(path);
-
+    let title = path.split('/').at(-1);
+    if(title?.endsWith(".md")){
+        title = title.slice(0,-3);
+    }
 
     return (
         <ContainerLayout
+            title={<SplitLinkTitle justify={"flex-end"} paths={nextSlugGeneratePaths(path.split('/')).slice(0,-1)}/>}
         >
+            <>
+            <MarkDownHeadTitle>
+                {title}
+            </MarkDownHeadTitle>
             <article
                 className={"markdown-body dark"}
                 dangerouslySetInnerHTML={{__html: data}}>
             </article>
+            </>
         </ContainerLayout>
 
     )

@@ -24,7 +24,12 @@ export interface AppConfigType {
         }
     }
 }
-type GithubBlogShowPathType = 'contents' | 'profile';
+export const GithubBlogShowPathTypeEnum  = {
+    CONTENTS: 'contents',
+    PROFILE:'profile',
+    MARKDOWN: 'markdown-viewer'
+} as const;
+export type GithubBlogShowPathType = typeof GithubBlogShowPathTypeEnum [keyof typeof GithubBlogShowPathTypeEnum];
 export enum GithubBlogShowPathSrc {
     GIT_AVATAR = 'GIT_AVATAR'
 }
