@@ -8,6 +8,10 @@ const userConfig = GithubBlogConfig({
         repository: 'Obsidian',
         owner: 'jun-young1993'
     },
+    mainPage: {
+        type: 'markdown-viewer',
+        path: 'blog/docs/nextjs-github-blog/readme.md'
+    },
     githubBlogShowPaths:[{
         type: 'profile',
         src: GithubBlogShowPathSrc.GIT_AVATAR,
