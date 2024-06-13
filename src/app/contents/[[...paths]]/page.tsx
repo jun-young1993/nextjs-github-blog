@@ -1,6 +1,6 @@
 import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 import getUserConfig from "@/utills/config/get-user.config";
-import ContainerLayout from "@/components/ui/ContainerLayout";
+import ContainerLayout, { ContainerLayoutProps } from "@/components/ui/ContainerLayout";
 import ContentList from "@/components/structs/contents/content-list";
 import {redirect} from "next/navigation";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
@@ -9,6 +9,7 @@ import APP_CONFIG from "@/utills/config/config";
 export interface Params {
     params: {
         paths?: string[] | []
+        container?: ContainerLayoutProps
     },
 }
 
@@ -26,13 +27,16 @@ async function getData(path: string): Promise<{data: GithubContentInterface[]}> 
     }
 }
 export default async function Page({ params }:Params) {
-    const path = nextSlugGitContentsPath(params.paths);
-    const paths = nextSlugGeneratePaths(params.paths);
+    const {paths:pathArray, container} = params;
+    const path = nextSlugGitContentsPath(pathArray);
+    const paths = nextSlugGeneratePaths(pathArray);
 
     const {data} = await getData(path);
 
     return (
-        <ContainerLayout>
+        <ContainerLayout
+            {...container}
+        >
             <ContentList
                 paths={paths}
                 data={data.map((item) => {

@@ -1,8 +1,9 @@
-import ContainerLayout from "@/components/ui/ContainerLayout";
+import ContainerLayout, { ContainerLayoutProps } from "@/components/ui/ContainerLayout";
 import APP_CONFIG from "@/utills/config/config";
 type Params = {
 	params: {
 		repo: string
+		container?: ContainerLayoutProps
 	}
 }
 async function getData(repo: string){
@@ -14,12 +15,14 @@ async function getData(repo: string){
 	}
 }
 export default async function Page({params}: Params){
-	const {repo} = params;
+	const {repo, container} = params;
 	const {data} = await getData(repo);
 	const {content} = data;
 
 	return(
-		<ContainerLayout>
+		<ContainerLayout
+			{...container}
+		>
 			<article
 				dangerouslySetInnerHTML={{__html: content}}>
 			</article>

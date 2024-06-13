@@ -17,14 +17,21 @@ export async function GET(): Promise<Response>{
 		}
 		const result:GithubUserInterface = await response.json();
 		return NextResponse.json(result,{
-			status: status
+			status: status,
+			headers: {
+				'Content-Type': 'application/json',
+				
+			}
 		})
 	}catch(error){
 		const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 		return NextResponse.json({
 			error: errorMessage
 		}, {
-			status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
+			status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,
+			headers: {
+				'Content-Type': 'application/json',
+			}
 		});
 	}
 }

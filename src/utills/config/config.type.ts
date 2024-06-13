@@ -39,10 +39,15 @@ export interface GithubBlogShowPath {
     path: string
 }
 
+export interface BlogHeaderMenu extends GithubBlogShowPath {
+    title: string
+}
+
 export interface GithubBlogConfigType {
     title: string
     description: string
     domain: string
+    headerMenus?:BlogHeaderMenu[],
     mainPage?: GithubBlogShowPath,
     git: {
         repository: string,

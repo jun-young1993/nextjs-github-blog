@@ -1,6 +1,6 @@
 'use client'
 import {ReactNode} from "react";
-import { MacContainer, useTheme} from "juny-react-style";
+import { MacContainer, MacContainerProps, useTheme} from "juny-react-style";
 import styled from "styled-components";
 import {useRouter} from "next/navigation";
 
@@ -19,13 +19,12 @@ const ContainerLayoutStyled = styled.div`
   justify-content: center;
   align-items: center;
 `;
-interface ContainerLayoutProps {
+export interface ContainerLayoutProps extends MacContainerProps{
     onClose?: () => void
-    children?: ReactNode
     theme?: any
     title?: string | ReactNode
 }
-function ContainerLayout({children, title, onClose}: ContainerLayoutProps){
+function ContainerLayout({children, onClose, ...props}: ContainerLayoutProps){
     const router = useRouter();
     const {theme} = useTheme();
     
@@ -33,9 +32,7 @@ function ContainerLayout({children, title, onClose}: ContainerLayoutProps){
         <ContainerLayoutWrapStyled>
         <ContainerLayoutStyled>
             <MacContainer
-                header={{
-                    title:<>{title}</>
-                }}
+                {...props}
                 overflow="hidden"
                 onClose={() => {
                     router.push('/')
