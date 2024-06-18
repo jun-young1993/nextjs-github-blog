@@ -21,7 +21,8 @@ export interface AppConfigType {
             contents: (path: string) => string
             trees: (treeSha: string) => string
             readme: (repo: string) => string
-        }
+        },
+        user: () => string
     }
 }
 export const GithubBlogShowPathTypeEnum  = {
@@ -47,7 +48,8 @@ export interface GithubBlogConfigType {
     title: string
     description: string
     domain: string
-    headerMenus?:BlogHeaderMenu[],
+    webSiteImage?: string
+    headerMenus?:BlogHeaderMenu[]
     mainPage?: GithubBlogShowPath,
     git: {
         repository: string,

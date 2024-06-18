@@ -11,6 +11,7 @@ import getUserConfig from "@/utills/config/get-user.config";
 import {GOOGLE_AD_SENSE_SCRIPT_SRC, GOOGLE_ANALYTICS_G_ID} from "@/utills/config/config";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from "next/script";
+import OpenGraph from "@/components/structs/global/open-graph";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,6 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <OpenGraph />
       <body className={inter.className}>
           <UserDataProvider>
             <StyleThemeProvider>

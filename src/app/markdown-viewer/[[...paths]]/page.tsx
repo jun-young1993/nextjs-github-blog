@@ -1,20 +1,18 @@
 import ContainerLayout, { ContainerLayoutProps } from "@/components/ui/ContainerLayout";
 import MarkDownHeadTitle from "@/components/ui/MarkDownHeadTitle";
 import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
+import { PathsPageParams } from "@/interfaces/root-page.interface";
 import getUserConfig from "@/utills/config/get-user.config";
 import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 
-export interface Params {
-    params: {
-        paths?: string[] | []
-        container?: ContainerLayoutProps
-    }
+export interface Params extends PathsPageParams {
+    
 }
 async function getData(path: string): Promise<{data: string}> {
     const DOMAIN = getUserConfig('domain')
     const timestamp = new Date().getTime();
     const url = `${DOMAIN}/api/github/markdown?timestamp=${timestamp}`
-    console.log(url);
+    
     const response = await fetch(url,{
         method: "POST",
         body: JSON.stringify({

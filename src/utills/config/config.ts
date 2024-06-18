@@ -53,7 +53,10 @@ const APP_CONFIG: AppConfigType = {
             readme: (repo: string) => {
                 return `${SITE_DOMAIN}/api/github/readme/${repo}`
             }
-        }   
+        },
+        user: () => {
+            return `${SITE_DOMAIN}/api/github/user`
+        }
     }
 
 }

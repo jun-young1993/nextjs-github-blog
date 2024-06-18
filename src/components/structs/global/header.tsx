@@ -32,8 +32,9 @@ function Header(){
                     </>
                 : <Spinner />}
             </ProfileWrap>
-            <BetweenContainer>
-                <div>hihi</div>
+            <BetweenContainer
+                justify="end"
+            >
                 <DarkModeButton />
             </BetweenContainer>
         </BetweenContainer>
