@@ -12,6 +12,7 @@ import {GOOGLE_AD_SENSE_SCRIPT_SRC, GOOGLE_ANALYTICS_G_ID} from "@/utills/config
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from "next/script";
 import OpenGraph from "@/components/structs/global/open-graph";
+import {RootLayoutServerAction} from "@/components/providers/root-lauyout-server-action";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,6 +30,8 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
 
+
+
   return (
     <html lang="en">
       <OpenGraph />
@@ -36,7 +39,9 @@ export default async function RootLayout({
           <UserDataProvider>
             <StyleThemeProvider>
               <RootLayoutWrapProvider>
-                {children}
+                  <RootLayoutServerAction>
+                    {children}
+                  </RootLayoutServerAction>
               </RootLayoutWrapProvider>
             </StyleThemeProvider>
           </UserDataProvider>
