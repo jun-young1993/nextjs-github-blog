@@ -1,7 +1,11 @@
 [DEMO SITE](https://nextjs-github-blog.vercel.app)
 
+
+
 # Setup
----
+## Prerequisite
+- Node.js 18.17 or latest
+## Installation
 ### 1. Fork And Clone this repo
 #### Version Sync
 1. git add remote

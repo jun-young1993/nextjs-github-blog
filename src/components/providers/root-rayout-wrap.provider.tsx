@@ -6,8 +6,8 @@ import Header from "@/components/structs/global/header";
 import Footer from "@/components/structs/global/footer";
 
 export default async function RootLayoutWrapProvider({
-                                                         children,
-                                                     }: {
+    children
+}: {
     children: ReactNode | any
 }) {
 
@@ -16,11 +16,9 @@ export default async function RootLayoutWrapProvider({
             overflow={"auto"}
             footerGap={"1rem"}
         >
-            <Header
-
-            />
+            <Header />
             {children}
-            <Footer/>
+            <Footer />
         </Screen>
     )
 }

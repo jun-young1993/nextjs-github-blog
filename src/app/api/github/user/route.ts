@@ -3,13 +3,16 @@ import APP_CONFIG from "@/utills/config/config";
 import { constants } from "http2";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
+import {firstVisit} from "@/utills/defined/cookie";
 
 export async function GET(): Promise<Response>{
 	try{
 		const {GIT_HUB_API_END_POINT} = APP_CONFIG;
 		const cookieStore = cookies();
-		console.log('cookieStore has user',cookieStore.has('user'));
+		if(!cookieStore.has(firstVisit)){
+			cookieStore.set(firstVisit, 'true', { maxAge: 3600*24 })
+		}
+
 		const response = await fetch(GIT_HUB_API_END_POINT.user(),{
 			headers: APP_CONFIG.GIT_HUB_API_REQUEST_HEADER
 		});

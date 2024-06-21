@@ -2,7 +2,6 @@ import { NextResponse} from "next/server";
 import APP_CONFIG from "@/utills/config/config";
 import {constants} from "http2";
 import getUserConfig from "@/utills/config/get-user.config";
-import { headers } from "next/headers";
 
 export async function POST(req: Request): Promise<Response>
 {

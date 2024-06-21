@@ -11,6 +11,7 @@ const ProfileWrap = styled.div`
     gap: 10px;
     align-items: center;
 `
+
 function Header(){
     const {userData} = useGithubUser();
     const path = usePathname();
@@ -34,6 +35,7 @@ function Header(){
             </ProfileWrap>
             <BetweenContainer
                 justify="end"
+                equalSpacing={false}
             >
                 <DarkModeButton />
             </BetweenContainer>

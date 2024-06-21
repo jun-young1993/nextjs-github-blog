@@ -11,8 +11,6 @@ import getUserConfig from "@/utills/config/get-user.config";
 import {GOOGLE_AD_SENSE_SCRIPT_SRC, GOOGLE_ANALYTICS_G_ID} from "@/utills/config/config";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from "next/script";
-import OpenGraph from "@/components/structs/global/open-graph";
-import {RootLayoutServerAction} from "@/components/providers/root-lauyout-server-action";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,6 +18,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: getUserConfig('title'),
   description: getUserConfig('description'),
+  openGraph: {
+    url: getUserConfig('domain'),
+    type: "website",
+    title: getUserConfig('title'),
+    description: getUserConfig('description'),
+    images: getUserConfig('webSiteImage')
+  }
 };
 
 
@@ -30,19 +35,16 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
 
-
+  
 
   return (
     <html lang="en">
-      <OpenGraph />
       <body className={inter.className}>
           <UserDataProvider>
             <StyleThemeProvider>
-              <RootLayoutWrapProvider>
-                  <RootLayoutServerAction>
+                  <RootLayoutWrapProvider>
                     {children}
-                  </RootLayoutServerAction>
-              </RootLayoutWrapProvider>
+                  </RootLayoutWrapProvider>
             </StyleThemeProvider>
           </UserDataProvider>
       </body>
