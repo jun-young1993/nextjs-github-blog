@@ -17,8 +17,7 @@ export async function POST(req: Request): Promise<Response>
         const contentResponse = await fetch(getContentUrl);
         const result = await contentResponse.json();
         const text = Buffer.from(result.content, result.encoding).toString('utf8');
-        
-        console.log('호출함');
+
         const response = await fetch(GIT_HUB_API_END_POINT.markdown(),{
             method: "POST",
             headers: GIT_HUB_API_REQUEST_HEADER,
