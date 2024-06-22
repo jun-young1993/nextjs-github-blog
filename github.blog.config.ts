@@ -17,10 +17,16 @@ const userConfig = GithubBlogConfig({
     mainPage: {
         type: 'markdown-viewer',
         path: 'blog/docs/nextjs-github-blog/readme.md',
+        alertLevel: 'secondary',
         alert: [{
             githubBlogShowPath: {
                 type: 'markdown-viewer',
                 path: 'blog/Resume/jun-young.md',
+            }
+        },{
+            githubBlogShowPath: {
+                type: 'markdown-viewer',
+                path: 'blog/Resume/item/test.md',
             }
         }]
     },

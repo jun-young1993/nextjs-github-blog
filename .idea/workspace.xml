@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed26bfb9-97d7-432a-979f-de0dff028a55" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.local.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/github.blog.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/github.blog.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/github/contents/[[...paths]]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/github/contents/[[...paths]]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/github/markdown/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/github/markdown/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/github/readme/[repo]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/github/readme/[repo]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/github.blog.config.ts.example" beforeDir="false" afterPath="$PROJECT_DIR$/github.blog.config.ts.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/profile/[repo]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/[path]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dynamic/DynamicAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dynamic/DynamicAlert.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dynamic/DynamicAlertContainer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dynamic/items/DynamicAlertContainer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/providers/root-rayout-wrap.provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/providers/root-rayout-wrap.provider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/structs/global/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/structs/global/footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utills/config/config.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utills/config/config.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utills/next-slug.utills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utills/next-slug.utills.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +83,7 @@
       <workItem from="1718809567405" duration="672000" />
       <workItem from="1718810249305" duration="3357000" />
       <workItem from="1719034416700" duration="8499000" />
-      <workItem from="1719056623274" duration="4074000" />
+      <workItem from="1719056623274" duration="4982000" />
     </task>
     <servers />
   </component>

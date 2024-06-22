@@ -46,6 +46,7 @@ export interface GithubBlogShowPath {
     type: GithubBlogShowPathType
     path: string
     alert?: AlertsType[]
+    alertLevel?: AlertProps['level']
 }
 
 export interface BlogHeaderMenu extends GithubBlogShowPath {

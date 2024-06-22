@@ -44,17 +44,19 @@ export default function Home() {
   return (
     <>
       <MainComponent mainPage={userMainPage} />
-      
-      <DynamicAlertComponent
-        level={"info"}
-      >
-        {userMainPage?.alert?.map((alert, index) => {
-          return <MainComponent
-              key={alert.githubBlogShowPath.toString()}
-              mainPage={alert?.githubBlogShowPath}
-          />
-        })}
-      </DynamicAlertComponent>
+      {userMainPage?.alert &&
+          <DynamicAlertComponent
+              level={userMainPage?.alertLevel ?? 'secondary'}
+          >
+            {userMainPage?.alert?.map((alert, index) => {
+              return <MainComponent
+                  key={alert.githubBlogShowPath.toString()}
+                  mainPage={alert?.githubBlogShowPath}
+              />
+            })}
+          </DynamicAlertComponent>
+      }
+
 
         
     </>
