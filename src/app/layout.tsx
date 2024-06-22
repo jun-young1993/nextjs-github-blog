@@ -68,7 +68,7 @@ export default async function RootLayout({
         <>
             <Script
                 id={`infolinks-${INFOLINKS_AD_PID}`}
-                src={"http://resources.infolinks.com/js/infolinks_main.js"}
+                src={"https://resources.infolinks.com/js/infolinks_main.js"}
             />
             <Script
                 id={`infolinks-script-${INFOLINKS_AD_PID}`}
