@@ -2,15 +2,16 @@ import {AppConfigType} from "@/utills/config/config.type";
 import { getEnv } from "./get-value.config";
 import getUserConfig from "./get-user.config";
 
-const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<string>('GIT_HUB_PERSONAL_ACCESS_TOKEN');
+const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<null | string>('GIT_HUB_PERSONAL_ACCESS_TOKEN',null);
 const GIT_HUB_API_VERSION = '2022-11-28';
 const GIT_HUB_API_URL = 'https://api.github.com';
 const SITE_DOMAIN = getUserConfig('domain');
 const GIT_HUB_PERSONAL_REPOSITORY_NAME = getUserConfig('git').repository;
 const GIT_HUB_PERSONAL_REPOSITORY_OWNER = getUserConfig('git').owner;
-export const GOOGLE_AD_SENSE_SCRIPT_SRC = getEnv<null>('GOOGLE_AD_SENSE_SCRIPT_SRC',null);
-export const GOOGLE_ANALYTICS_G_ID = getEnv<null>('GOOGLE_ANALYTICS_G_ID',null);
-
+export const GOOGLE_AD_SENSE_SCRIPT_SRC = getEnv<null | string>('GOOGLE_AD_SENSE_SCRIPT_SRC',null);
+export const GOOGLE_ANALYTICS_G_ID = getEnv<null | string>('GOOGLE_ANALYTICS_G_ID',null);
+export const INFOLINKS_AD_PID = getEnv<null | string>('INFOLINKS_AD_PID',null);
+export const INFOLINKS_AD_WSID = getEnv<null | string>('INFOLINKS_AD_WSID',null);
 const APP_CONFIG: AppConfigType = {
     SITE_DOMAIN: SITE_DOMAIN,
     GIT_HUB_API_URL: GIT_HUB_API_URL,

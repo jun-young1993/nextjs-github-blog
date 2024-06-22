@@ -8,7 +8,12 @@ import StyleThemeProvider from "@/components/providers/style-theme.provider";
 
 import UserDataProvider from "@/components/providers/git.user.data.provider";
 import getUserConfig from "@/utills/config/get-user.config";
-import {GOOGLE_AD_SENSE_SCRIPT_SRC, GOOGLE_ANALYTICS_G_ID} from "@/utills/config/config";
+import {
+    GOOGLE_AD_SENSE_SCRIPT_SRC,
+    GOOGLE_ANALYTICS_G_ID,
+    INFOLINKS_AD_PID,
+    INFOLINKS_AD_WSID
+} from "@/utills/config/config";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from "next/script";
 import {ReactNode, Suspense} from "react";
@@ -59,6 +64,20 @@ export default async function RootLayout({
                   src={GOOGLE_AD_SENSE_SCRIPT_SRC}
                   crossOrigin="anonymous" />
       }
+    {(INFOLINKS_AD_PID && INFOLINKS_AD_WSID) &&
+        <>
+            <Script
+                id={`infolinks-${INFOLINKS_AD_PID}`}
+                src={"http://resources.infolinks.com/js/infolinks_main.js"}
+            />
+            <Script
+                id={`infolinks-script-${INFOLINKS_AD_PID}`}
+            >
+                {`var infolinks_pid = ${INFOLINKS_AD_PID};var infolinks_wsid = ${INFOLINKS_AD_WSID};`}
+            </Script>
+        </>
+    }
+
     </html>
   );
 }
