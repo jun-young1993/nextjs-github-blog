@@ -3,7 +3,7 @@ import {MacMenuBar, MacMenuBarItem} from 'juny-react-style';
 import {useRouter} from "next/navigation";
 import getUserConfig from "@/utills/config/get-user.config";
 import { useGithubUser } from '@/components/providers/git.user.data.provider';
-import { GithubBlogShowPath, GithubBlogShowPathSrc } from '@/utills/config/config.type';
+import { GithubBlogShowPathSrc } from '@/utills/config/config.type';
 
 function Footer() {
     const githubBlogShowPaths = getUserConfig('githubBlogShowPaths');

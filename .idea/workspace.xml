@@ -5,12 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed26bfb9-97d7-432a-979f-de0dff028a55" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/providers/root-lauyout-server-action.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utills/defined/cookie.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/github.blog.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/github.blog.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/github/contents/[[...paths]]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/github/contents/[[...paths]]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/github/markdown/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/github/markdown/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/github/readme/[repo]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/github/readme/[repo]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/profile/[repo]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/[path]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dynamic/DynamicAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dynamic/DynamicAlert.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dynamic/DynamicAlertContainer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dynamic/items/DynamicAlertContainer.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/providers/root-rayout-wrap.provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/providers/root-rayout-wrap.provider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/structs/global/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/structs/global/footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utills/config/config.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utills/config/config.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utills/next-slug.utills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utills/next-slug.utills.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +31,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -37,21 +48,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/junyoungkim/Desktop/junyoung/app/source/nextjs-github-blog/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/junyoungkim/Desktop/junyoung/app/source/nextjs-github-blog/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/junyoungkim/Desktop/junyoung/app/source/nextjs-github-blog/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/junyoungkim/Desktop/junyoung/app/source/nextjs-github-blog/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public" />
@@ -59,11 +70,11 @@
       <recent name="$PROJECT_DIR$/src/app/components/providers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/app/profile/[slug]" />
       <recent name="$PROJECT_DIR$/src/app" />
       <recent name="$PROJECT_DIR$/src/app/markdown-viewer/[[...slug]]" />
       <recent name="$PROJECT_DIR$/src/utills/config" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
@@ -81,7 +92,9 @@
       <workItem from="1717938590499" duration="7723000" />
       <workItem from="1718020607729" duration="6744000" />
       <workItem from="1718809567405" duration="672000" />
-      <workItem from="1718810249305" duration="3242000" />
+      <workItem from="1718810249305" duration="3357000" />
+      <workItem from="1719034416700" duration="8499000" />
+      <workItem from="1719056623274" duration="4074000" />
     </task>
     <servers />
   </component>
@@ -98,5 +111,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/middleware.ts</url>
+          <line>8</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

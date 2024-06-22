@@ -5,7 +5,7 @@ import { Screen } from 'juny-react-style';
 import Header from "@/components/structs/global/header";
 import Footer from "@/components/structs/global/footer";
 
-export default async function RootLayoutWrapProvider({
+export default function RootLayoutWrapProvider({
     children
 }: {
     children: ReactNode | any

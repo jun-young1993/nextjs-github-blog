@@ -1,54 +1,60 @@
-import DynamicALertComponent from "@/components/dynamic/DynamicAlert";
-import DynamicALertContainerComponent from "@/components/dynamic/DynamicAlertContainer";
+
 import { PathsPageParams } from "@/interfaces/root-page.interface";
-import { GithubBlogShowPathTypeEnum } from "@/utills/config/config.type";
+import {GithubBlogShowPath, GithubBlogShowPathTypeEnum} from "@/utills/config/config.type";
 import getUserConfig from "@/utills/config/get-user.config";
 
 import dynamic from "next/dynamic";
+import DynamicAlertComponent from "@/components/dynamic/DynamicAlert";
+
 
 const MarkdownViewer = dynamic(() => 
   import('./markdown-viewer/[[...paths]]/page'));
-export default function Home() {
-  const userMainPage = getUserConfig('mainPage');
+const separator: string | RegExp = '/';
+const MainComponent = ({mainPage}: {mainPage : GithubBlogShowPath | undefined}) => {
   const pathsPageParams: PathsPageParams['params'] = {
-    paths: userMainPage?.path.split('/') ?? [],
+    paths: mainPage?.path.split(separator) ?? [],
     container:{
       header:{
-        title: userMainPage?.path.split('/').at(-1),
+        title: mainPage?.path.split(separator).at(-1),
         showClose: false,
         showHidden: false,
         showMinimize: false
       }
     }
   }
-  const MainComponent = () => {
-    switch(userMainPage?.type){
+  switch(mainPage?.type){
 
-      case GithubBlogShowPathTypeEnum.CONTENTS:
-        const ContentsComponent = dynamic(() => 
+    case GithubBlogShowPathTypeEnum.CONTENTS:
+      const ContentsComponent = dynamic(() =>
           import('./contents/[[...paths]]/page'));
-        return <ContentsComponent params={pathsPageParams} />
-  
-      case GithubBlogShowPathTypeEnum.MARKDOWN:
-        return <MarkdownViewer params={pathsPageParams} />
-  
-      default:
-        return null;
-    }
+      return <ContentsComponent params={pathsPageParams} />
+
+    case GithubBlogShowPathTypeEnum.MARKDOWN:
+      return <MarkdownViewer params={pathsPageParams} />
+
+    default:
+      return null;
   }
+}
+export default function Home() {
+  const userMainPage = getUserConfig('mainPage');
+
+
   
   return (
     <>
-      <MainComponent />
+      <MainComponent mainPage={userMainPage} />
       
-      <DynamicALertComponent
-        index={1}
+      <DynamicAlertComponent
+        level={"info"}
       >
-        {/* <MarkdownViewer params={pathsPageParams} /> */}
-        <div>hi</div>
-        <div>hi</div>
-        <div>hi</div>
-      </DynamicALertComponent>
+        {userMainPage?.alert?.map((alert, index) => {
+          return <MainComponent
+              key={alert.githubBlogShowPath.toString()}
+              mainPage={alert?.githubBlogShowPath}
+          />
+        })}
+      </DynamicAlertComponent>
 
         
     </>

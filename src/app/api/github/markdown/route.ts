@@ -8,7 +8,7 @@ export async function POST(req: Request): Promise<Response>
     try{
         const {GIT_HUB_API_REQUEST_HEADER, GIT_HUB_API_END_POINT} = APP_CONFIG;
         const {path} = await req.json();
-    
+
         const DOMAIN = getUserConfig('domain')
         const getContentUrl = `${DOMAIN}/api/github/contents/${path}`;
         if(!path.endsWith('.md')){

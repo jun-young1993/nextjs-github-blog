@@ -1,3 +1,5 @@
+import {AlertProps} from "juny-react-style";
+
 export interface AppConfigType {
     SITE_DOMAIN: string
     GIT_HUB_API_URL: string
@@ -34,10 +36,16 @@ export type GithubBlogShowPathType = typeof GithubBlogShowPathTypeEnum [keyof ty
 export enum GithubBlogShowPathSrc {
     GIT_AVATAR = 'GIT_AVATAR'
 }
+
+export interface AlertsType extends AlertProps{
+    githubBlogShowPath: GithubBlogShowPath
+}
+
 export interface GithubBlogShowPath {
     src?: string | GithubBlogShowPathSrc
     type: GithubBlogShowPathType
     path: string
+    alert?: AlertsType[]
 }
 
 export interface BlogHeaderMenu extends GithubBlogShowPath {
@@ -57,4 +65,5 @@ export interface GithubBlogConfigType {
     },
     githubBlogShowPaths: GithubBlogShowPath[]
     userSitemap: string[] | []
+    ignorePaths?:RegExp[]
 }

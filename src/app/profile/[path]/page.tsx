@@ -6,8 +6,10 @@ type Params = {
 		container?: ContainerLayoutProps
 	}
 }
+
 async function getData(path: string){
 	const {APP_END_POINT} = APP_CONFIG;
+
 	const response = await fetch(APP_END_POINT.repos.readme(path));
 	const result = await response.json();
 	return {
@@ -24,7 +26,8 @@ export default async function Page({params}: Params){
 			{...container}
 		>
 			<article
-				dangerouslySetInnerHTML={{__html: content}}>
+				dangerouslySetInnerHTML={{__html: content ?? 'undefined'}}
+			>
 			</article>
 		</ContainerLayout>
 	)

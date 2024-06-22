@@ -16,7 +16,13 @@ const userConfig = GithubBlogConfig({
     }],
     mainPage: {
         type: 'markdown-viewer',
-        path: 'blog/docs/nextjs-github-blog/readme.md'
+        path: 'blog/docs/nextjs-github-blog/readme.md',
+        alert: [{
+            githubBlogShowPath: {
+                type: 'markdown-viewer',
+                path: 'blog/Resume/jun-young.md',
+            }
+        }]
     },
     githubBlogShowPaths:[{
         type: 'profile',
@@ -28,6 +34,10 @@ const userConfig = GithubBlogConfig({
     }],
     userSitemap: [
         'ads.txt'
+    ],
+    ignorePaths: [
+        /^Gemiso(\/.*)?$/,     // 'Private' 또는 'Private/*'
+        /^(\/.*)Private(\/.*)?$/,     // 'Private' 또는 'Private/*'
     ]
 });
 export default userConfig;
