@@ -2,8 +2,8 @@ import { GithubBlogShowPathSrc } from "@/utills/config/config.type";
 import GithubBlogConfig from "@/utills/config/github-blog.config";
 const userConfig = GithubBlogConfig({
     // site domain
-    // domain: 'http://localhost:3000',
-    domain: 'https://nextjs-github-blog.vercel.app/',
+    domain: 'http://localhost:3000',
+    // domain: 'https://nextjs-github-blog.vercel.app',
 
     // site metadata
     title: 'nextjs-github-blog',
@@ -48,8 +48,10 @@ const userConfig = GithubBlogConfig({
 
     nextConfig: {
         cache: {
-            revalidate : 3600
+            revalidate : 1
         }
-    }
+    },
+
+    wikiLink: 'images'
 });
 export default userConfig;

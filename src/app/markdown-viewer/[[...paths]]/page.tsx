@@ -1,10 +1,12 @@
-import ContainerLayout, { ContainerLayoutProps } from "@/components/ui/ContainerLayout";
+import ContainerLayout from "@/components/ui/ContainerLayout";
 import MarkDownHeadTitle from "@/components/ui/MarkDownHeadTitle";
 import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
 import { PathsPageParams } from "@/interfaces/root-page.interface";
 import getUserConfig from "@/utills/config/get-user.config";
 import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 import {NEXT_CONFIG} from "@/utills/config/config";
+import MarkDownPreview from "@/components/ui/MarkDownPreview";
+
 
 export interface Params extends PathsPageParams {
     
@@ -13,7 +15,7 @@ export interface Params extends PathsPageParams {
 async function getData(path: string): Promise<{data: string}> {
     const DOMAIN = getUserConfig('domain')
     const url = `${DOMAIN}/api/github/markdown`
-    
+
     const response = await fetch(url,{
         method: "POST",
         body: JSON.stringify({
@@ -36,8 +38,8 @@ export default async function Page({ params }: Params){
         const path = nextSlugGitContentsPath(paths);
         const {data} = await getData(path);
 
-        let title = path.split('/').at(-1);
-        if(title?.endsWith(".md")){
+        let title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
+        if(title && title?.endsWith(".md")){
             title = title.slice(0,-3);
         }
 
@@ -49,15 +51,11 @@ export default async function Page({ params }: Params){
                     ...{...container?.header}
                 }}
             >
-                <>
-                    <MarkDownHeadTitle>
-                        {title}
-                    </MarkDownHeadTitle>
-                    <article
-                        className={"markdown-body dark"}
-                        dangerouslySetInnerHTML={{__html: data ?? 'not found'}}>
-                    </article>
-                </>
+                <MarkDownPreview
+                    title={title}
+                    data={data}
+                />
+
             </ContainerLayout>
 
         )

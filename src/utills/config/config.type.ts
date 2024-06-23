@@ -13,7 +13,8 @@ export interface AppConfigType {
         repos: {
             contents: (path: string) => string
             trees: (treeSha: string) => string
-            readme: (repo: string) => string
+            readme: (repo: string) => string,
+            images: (path: string) => string
         },
         markdown: () => string
         user: () => string
@@ -24,7 +25,9 @@ export interface AppConfigType {
             trees: (treeSha: string) => string
             readme: (repo: string) => string
         },
-        user: () => string
+        user: () => string,
+        images: (path: string) => string
+
     }
 }
 export const GithubBlogShowPathTypeEnum  = {
@@ -62,7 +65,8 @@ export interface GithubBlogConfigType {
     mainPage?: GithubBlogShowPath,
     git: {
         repository: string,
-        owner: string
+        owner: string,
+        branch?: string
     },
     githubBlogShowPaths: GithubBlogShowPath[]
     userSitemap: string[] | []
@@ -73,4 +77,8 @@ export interface GithubBlogConfigType {
             revalidate?: number | false
         }
     }
+
+    wikiLink?: string
+
+
 }

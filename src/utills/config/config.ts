@@ -5,14 +5,17 @@ import getUserConfig from "./get-user.config";
 const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<string>('GIT_HUB_PERSONAL_ACCESS_TOKEN');
 const GIT_HUB_API_VERSION = '2022-11-28';
 const GIT_HUB_API_URL = 'https://api.github.com';
+const GITHUB_RAW_CONTENT_URL = 'https://raw.githubusercontent.com';
 const SITE_DOMAIN = getUserConfig('domain');
 const GIT_HUB_PERSONAL_REPOSITORY_NAME = getUserConfig('git').repository;
 const GIT_HUB_PERSONAL_REPOSITORY_OWNER = getUserConfig('git').owner;
+const GIT_HUB_PERSONAL_REPOSITORY_BRANCH = getUserConfig('git').branch ?? 'main';
+
 export const GOOGLE_AD_SENSE_SCRIPT_SRC = getEnv<null | string>('GOOGLE_AD_SENSE_SCRIPT_SRC',null);
 export const GOOGLE_ANALYTICS_G_ID = getEnv<null | string>('GOOGLE_ANALYTICS_G_ID',null);
 export const INFOLINKS_AD_PID = getEnv<null | string>('INFOLINKS_AD_PID',null);
 export const INFOLINKS_AD_WSID = getEnv<null | string>('INFOLINKS_AD_WSID',null);
-
+export const WIKI_LINK = getUserConfig('wikiLink');
 
 export const NEXT_CONFIG:{
     cache: {
@@ -46,6 +49,9 @@ const APP_CONFIG: AppConfigType = {
             },
             readme: (repo: string) => {
                 return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${repo}/readme`
+            },
+            images: (path: string) => {
+                return `${GITHUB_RAW_CONTENT_URL}/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/${GIT_HUB_PERSONAL_REPOSITORY_BRANCH}/${path}`
             }
         },
         markdown: () => {
@@ -69,6 +75,9 @@ const APP_CONFIG: AppConfigType = {
         },
         user: () => {
             return `${SITE_DOMAIN}/api/github/user`
+        },
+        images: (path: string) => {
+            return `${SITE_DOMAIN}/api/github/images/${path}`
         }
     }
 
