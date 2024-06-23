@@ -31,34 +31,38 @@ async function getData(path: string): Promise<{data: string}> {
 }
 
 export default async function Page({ params }: Params){
+    try{
+        const {paths, container} = params;
+        const path = nextSlugGitContentsPath(paths);
+        const {data} = await getData(path);
 
-    const {paths, container} = params;
-    const path = nextSlugGitContentsPath(paths);
-    const {data} = await getData(path);
+        let title = path.split('/').at(-1);
+        if(title?.endsWith(".md")){
+            title = title.slice(0,-3);
+        }
 
-    let title = path.split('/').at(-1);
-    if(title?.endsWith(".md")){
-        title = title.slice(0,-3);
+        return (
+            <ContainerLayout
+                {...container}
+                header={{
+                    title:<SplitLinkTitle justify={"flex-end"} paths={nextSlugGeneratePaths(path.split('/')).slice(0,-1)}/>,
+                    ...{...container?.header}
+                }}
+            >
+                <>
+                    <MarkDownHeadTitle>
+                        {title}
+                    </MarkDownHeadTitle>
+                    <article
+                        className={"markdown-body dark"}
+                        dangerouslySetInnerHTML={{__html: data ?? 'not found'}}>
+                    </article>
+                </>
+            </ContainerLayout>
+
+        )
+    }catch(error){
+        return <div></div>
     }
-    
-    return (
-        <ContainerLayout
-            {...container}
-            header={{
-                title:<SplitLinkTitle justify={"flex-end"} paths={nextSlugGeneratePaths(path.split('/')).slice(0,-1)}/>,
-                ...{...container?.header}   
-            }}
-        >
-            <>
-            <MarkDownHeadTitle>
-                {title}
-            </MarkDownHeadTitle>
-            <article
-                className={"markdown-body dark"}
-                dangerouslySetInnerHTML={{__html: data ?? 'not found'}}>
-            </article>
-            </>
-        </ContainerLayout>
 
-    )
 }
