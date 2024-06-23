@@ -1,6 +1,7 @@
 import {NextResponse} from "next/server";
 import APP_CONFIG from "@/utills/config/config";
 import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
+import {constants} from "http2";
 
 type Params = {
     params: {
@@ -25,9 +26,16 @@ export async function GET(request: Request, { params }: Params){
 
         return res;
     }catch( error ){
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json({
-            error: error.toString()
-        },{status: 500})
+            error: errorMessage
+        }, {
+            status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,
+            headers: {
+                'Content-Type': 'application/json',
+
+            }
+        });
     }
 
 
