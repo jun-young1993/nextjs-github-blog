@@ -50,7 +50,7 @@ const userConfig = GithubBlogConfig({
         cache: {
             revalidate : 3600
         }
-    }
+    },
 
 
     // We use wikiLinks such as [[path]] and ![[test.png]]. Please enter the repository's path.
