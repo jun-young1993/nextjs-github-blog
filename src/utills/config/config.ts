@@ -12,6 +12,18 @@ export const GOOGLE_AD_SENSE_SCRIPT_SRC = getEnv<null | string>('GOOGLE_AD_SENSE
 export const GOOGLE_ANALYTICS_G_ID = getEnv<null | string>('GOOGLE_ANALYTICS_G_ID',null);
 export const INFOLINKS_AD_PID = getEnv<null | string>('INFOLINKS_AD_PID',null);
 export const INFOLINKS_AD_WSID = getEnv<null | string>('INFOLINKS_AD_WSID',null);
+
+
+export const NEXT_CONFIG:{
+    cache: {
+        revalidate: number | false
+    }
+} = {
+    cache: {
+        revalidate: getUserConfig('nextConfig')?.cache?.revalidate ?? false
+    }
+}
+
 const APP_CONFIG: AppConfigType = {
     SITE_DOMAIN: SITE_DOMAIN,
     GIT_HUB_API_URL: GIT_HUB_API_URL,
@@ -61,5 +73,7 @@ const APP_CONFIG: AppConfigType = {
     }
 
 }
+
+
 
 export default APP_CONFIG;

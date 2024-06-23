@@ -67,4 +67,10 @@ export interface GithubBlogConfigType {
     githubBlogShowPaths: GithubBlogShowPath[]
     userSitemap: string[] | []
     ignorePaths?:RegExp[]
+
+    nextConfig?: {
+        cache?: {
+            revalidate?: number | false
+        }
+    }
 }

@@ -14,7 +14,8 @@ export async function GET(): Promise<Response>{
 		}
 
 		const response = await fetch(GIT_HUB_API_END_POINT.user(),{
-			headers: APP_CONFIG.GIT_HUB_API_REQUEST_HEADER
+			headers: APP_CONFIG.GIT_HUB_API_REQUEST_HEADER,
+			cache: 'no-store'
 		});
 		const {status, statusText } = response;
 		if(status !== constants.HTTP_STATUS_OK){

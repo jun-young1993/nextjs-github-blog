@@ -1,7 +1,8 @@
 import { NextResponse} from "next/server";
-import APP_CONFIG from "@/utills/config/config";
+import APP_CONFIG, {NEXT_CONFIG} from "@/utills/config/config";
 import {constants} from "http2";
 import getUserConfig from "@/utills/config/get-user.config";
+
 
 export async function POST(req: Request): Promise<Response>
 {
@@ -14,7 +15,10 @@ export async function POST(req: Request): Promise<Response>
         if(!path.endsWith('.md')){
             throw new Error('This is not a Markdown page.')
         }
-        const contentResponse = await fetch(getContentUrl);
+        const contentResponse = await fetch(getContentUrl,{
+            method: 'GET',
+            cache: 'no-store'
+        });
         const result = await contentResponse.json();
         const text = Buffer.from(result.content, result.encoding).toString('utf8');
 
@@ -28,6 +32,7 @@ export async function POST(req: Request): Promise<Response>
             throw new Error(`Request failed with status ${status}: ${statusText}`);
         }
         const markdownContent = await response.text();
+
         return NextResponse.json({
             content: markdownContent,
             headers: {

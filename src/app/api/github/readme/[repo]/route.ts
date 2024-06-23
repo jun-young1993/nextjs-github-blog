@@ -22,6 +22,7 @@ export async function GET(request: Request, {params}: Params): Promise<Response>
         const response = await fetch(GIT_HUB_API_END_POINT.markdown(),{
             method: "POST",
             headers: GIT_HUB_API_REQUEST_HEADER,
+            cache: 'no-store',
             body: JSON.stringify({text: text})
         })
         const {status, statusText } = response;

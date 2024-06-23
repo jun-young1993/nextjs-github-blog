@@ -4,23 +4,25 @@ import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
 import { PathsPageParams } from "@/interfaces/root-page.interface";
 import getUserConfig from "@/utills/config/get-user.config";
 import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
+import {NEXT_CONFIG} from "@/utills/config/config";
 
 export interface Params extends PathsPageParams {
     
 }
+export const fetchCache = 'force-no-store'
 async function getData(path: string): Promise<{data: string}> {
     const DOMAIN = getUserConfig('domain')
-    const timestamp = new Date().getTime();
-    const url = `${DOMAIN}/api/github/markdown?timestamp=${timestamp}`
+    const url = `${DOMAIN}/api/github/markdown`
     
     const response = await fetch(url,{
         method: "POST",
         body: JSON.stringify({
             path: path
         }),
-        cache: 'no-store'
+        next: {revalidate: NEXT_CONFIG.cache.revalidate}
     });
-    
+
+
     const result = await response.json();
     
     return {
@@ -29,9 +31,11 @@ async function getData(path: string): Promise<{data: string}> {
 }
 
 export default async function Page({ params }: Params){
+
     const {paths, container} = params;
     const path = nextSlugGitContentsPath(paths);
     const {data} = await getData(path);
+
     let title = path.split('/').at(-1);
     if(title?.endsWith(".md")){
         title = title.slice(0,-3);
@@ -51,7 +55,7 @@ export default async function Page({ params }: Params){
             </MarkDownHeadTitle>
             <article
                 className={"markdown-body dark"}
-                dangerouslySetInnerHTML={{__html: data}}>
+                dangerouslySetInnerHTML={{__html: data ?? 'not found'}}>
             </article>
             </>
         </ContainerLayout>

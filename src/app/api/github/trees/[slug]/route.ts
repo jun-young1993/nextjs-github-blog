@@ -16,7 +16,8 @@ export async function GET(request: Request, {params}: Params): Promise<Response>
 		    } = APP_CONFIG;
 		const url = GIT_HUB_API_END_POINT.repos.trees(params.slug);
 		const response = await fetch(url,{
-			headers: GIT_HUB_API_REQUEST_HEADER
+			headers: GIT_HUB_API_REQUEST_HEADER,
+			cache: 'no-store'
 		});
 		const {status, statusText } = response;
 		if(status !== constants.HTTP_STATUS_OK){
