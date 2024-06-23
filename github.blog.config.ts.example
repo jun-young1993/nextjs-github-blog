@@ -26,12 +26,7 @@ const userConfig = GithubBlogConfig({
         alert: [{
             githubBlogShowPath: {
                 type: 'markdown-viewer',
-                path: 'blog/Resume/jun-young.md',
-            }
-        },{
-            githubBlogShowPath: {
-                type: 'markdown-viewer',
-                path: 'blog/Resume/item/test.md',
+                path: 'blog/Resume/item/Hello World!.md',
             }
         }]
     },
@@ -49,6 +44,12 @@ const userConfig = GithubBlogConfig({
     ignorePaths: [
         /^Gemiso(\/.*)?$/,     // 'Private' 또는 'Private/*'
         /^(\/.*)Private(\/.*)?$/,     // 'Private' 또는 'Private/*'
-    ]
+    ],
+
+    nextConfig: {
+        cache: {
+            revalidate : 3600
+        }
+    }
 });
 export default userConfig;
