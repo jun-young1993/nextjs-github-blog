@@ -3,7 +3,7 @@ import GithubBlogConfig from "@/utills/config/github-blog.config";
 const userConfig = GithubBlogConfig({
     // site domain
     // domain: 'http://localhost:3000',
-    domain: 'https://nextjs-github-blog.vercel.app',
+    domain: 'https://nextjs-github-blog.vercel.app/',
 
     // site metadata
     title: 'nextjs-github-blog',
