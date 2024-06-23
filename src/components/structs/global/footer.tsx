@@ -18,8 +18,9 @@ function Footer() {
     return (
         <MacMenuBar
         >
-            {githubBlogShowPaths && githubBlogShowPaths.map(({path, type, src}, index) => {
-                const title  = path.split('/').at(-1);
+            {githubBlogShowPaths && githubBlogShowPaths.map(({path, type, src, title: configTitle}, index) => {
+                const title  = configTitle ?? path.split('/').at(-1) as string | undefined;
+
                 return (
                     <MacMenuBarItem
                         src={srcHandler(src)}
@@ -28,7 +29,7 @@ function Footer() {
                             router.push(`/${type}/${path}`)
                         }}
                         // src={"https://avatars.githubusercontent.com/u/102360897?v=4"}
-                        title={title ?? 'no name'}
+                        title={title || 'no name'}
                     />
                 )
             })}

@@ -30,12 +30,15 @@ export default async function sitemap({
         
         if(id === 0){
             const userSitemap = getUserConfig('userSitemap');
-            result = userSitemap.map((sitemap) => ({
+            if(userSitemap){
+                result = userSitemap.map((sitemap) => ({
                     url: `${SITE_DOMAIN}/${sitemap}`,
                     lastModified: new Date(),
                     changeFrequency: 'yearly' as 'yearly',
                     priority: 1,
-            }));
+                }));
+            }
+
         }else{
             const {type, path} = getUserConfig('githubBlogShowPaths')[id-1]
             

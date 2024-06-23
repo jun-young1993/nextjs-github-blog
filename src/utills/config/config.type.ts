@@ -47,6 +47,7 @@ export interface AlertsType extends AlertProps{
 export interface GithubBlogShowPath {
     src?: string | GithubBlogShowPathSrc
     type: GithubBlogShowPathType
+    title?: string
     path: string
     alert?: AlertsType[]
     alertLevel?: AlertProps['level']
@@ -69,7 +70,7 @@ export interface GithubBlogConfigType {
         branch?: string
     },
     githubBlogShowPaths: GithubBlogShowPath[]
-    userSitemap: string[] | []
+    userSitemap?: string[] | []
     ignorePaths?:RegExp[]
 
     nextConfig?: {
