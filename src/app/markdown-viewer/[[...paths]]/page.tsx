@@ -9,7 +9,7 @@ import {NEXT_CONFIG} from "@/utills/config/config";
 export interface Params extends PathsPageParams {
     
 }
-export const fetchCache = 'force-no-store'
+
 async function getData(path: string): Promise<{data: string}> {
     const DOMAIN = getUserConfig('domain')
     const url = `${DOMAIN}/api/github/markdown`
