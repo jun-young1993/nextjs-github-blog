@@ -8,9 +8,8 @@ export interface HeadingToc {
 export default function replaceHeadings(content: string): [string, HeadingToc[]]{
 
 	const headingRegex = new RegExp(`<h[1-${TABLE_OF_CONTENTS_MAX_LEVEL}][^>]*>(.*?)<\/h[1-${TABLE_OF_CONTENTS_MAX_LEVEL}]>`, 'g');
-	console.log(headingRegex);
 	const regex = new RegExp(`^<h([1-${TABLE_OF_CONTENTS_MAX_LEVEL}])`);
-	console.log(regex);
+	
 	const toc: HeadingToc[] = [];
 	const result = content.replace(headingRegex,(searchValue, replaceValue: string) => {
 		const uniqId = new Date().getTime().toString() + replaceValue;
