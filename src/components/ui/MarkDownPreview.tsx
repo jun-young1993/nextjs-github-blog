@@ -36,10 +36,15 @@ function MarkDownPreview({title, data}:MarkDownPreviewProps){
                         {tableOfContents.map(({id,title,level}) => {
                             return <li 
                                 key={`${id}`}
-                                style={{
-                                    marginLeft: `${parseInt(level)}rem`
+                                style={{                    
+
+                                    marginLeft: `${parseInt(level)-1}rem`
                                 }}>
-                                <a href={`#${id}`}>{title}</a>
+                                <a style={{
+                                    overflow: 'hidden',
+                                    whiteSpace: 'nowrap',
+                                    textOverflow: 'ellipsis',
+                                }}href={`#${id}`}>{title}</a>
                             </li>
                         })}
                     </ul>
