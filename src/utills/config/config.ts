@@ -16,7 +16,8 @@ export const GOOGLE_ANALYTICS_G_ID = getEnv<null | string>('GOOGLE_ANALYTICS_G_I
 export const INFOLINKS_AD_PID = getEnv<null | string>('INFOLINKS_AD_PID',null);
 export const INFOLINKS_AD_WSID = getEnv<null | string>('INFOLINKS_AD_WSID',null);
 export const WIKI_LINK = getUserConfig('wikiLink');
-
+export const TABLE_OF_CONTENTS = getUserConfig('tableOfContents') ?? true;
+export const TABLE_OF_CONTENTS_MAX_LEVEL = getUserConfig('tableOfContentsMaxLevel') ?? '3';
 export const NEXT_CONFIG:{
     cache: {
         revalidate: number | false

@@ -15,7 +15,7 @@ export default function replaceWikiLink(content: string){
                     width="100%" 
                     alt="${replaceValue}" 
                     src="${APP_END_POINT.images(imageUrl)}" 
-                    style="max-width: 95%;"
+                    style="max-width: 99%;"
                 >
             </a>
         `;

@@ -41,6 +41,8 @@ const userConfig = GithubBlogConfig({
     userSitemap: [
         'ads.txt'
     ],
+
+    
     ignorePaths: [
         /^Gemiso(\/.*)?$/,     // 'Private' 또는 'Private/*'
         /^(\/.*)Private(\/.*)?$/,     // 'Private' 또는 'Private/*'
@@ -52,8 +54,13 @@ const userConfig = GithubBlogConfig({
         }
     },
 
-
     // We use wikiLinks such as [[path]] and ![[test.png]]. Please enter the repository's path.
-    wikiLink: 'images'
+    wikiLink: 'images',
+
+    // Whether to use table of contents. The default value is true
+    tableOfContents: true,
+    // This specifies the heading tag number as a string for the table of contents.
+    // The default value is up to h3, and it can be spcified up to '6'
+    tableOfContentsMaxLevel: '3'
 });
 export default userConfig;

@@ -44,7 +44,9 @@ export default function Home() {
   return (
     <>
       <MainComponent mainPage={userMainPage} />
-      {userMainPage?.alert &&
+      
+      {/* alert 기능 보류 */}
+      {/* {userMainPage?.alert &&
           <DynamicAlertComponent
               level={userMainPage?.alertLevel ?? 'secondary'}
           >
@@ -55,7 +57,7 @@ export default function Home() {
               />
             })}
           </DynamicAlertComponent>
-      }
+      } */}
 
 
         

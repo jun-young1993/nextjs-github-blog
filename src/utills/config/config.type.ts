@@ -1,4 +1,5 @@
 import {AlertProps} from "juny-react-style";
+import { HeadingToc } from "../markdown/heading";
 
 export interface AppConfigType {
     SITE_DOMAIN: string
@@ -49,8 +50,8 @@ export interface GithubBlogShowPath {
     type: GithubBlogShowPathType
     title?: string
     path: string
-    alert?: AlertsType[]
-    alertLevel?: AlertProps['level']
+    // alert?: AlertsType[]
+    // alertLevel?: AlertProps['level']
 }
 
 export interface BlogHeaderMenu extends GithubBlogShowPath {
@@ -62,6 +63,8 @@ export interface GithubBlogConfigType {
     description: string
     domain: string
     webSiteImage?: string
+    tableOfContents?: boolean
+    tableOfContentsMaxLevel?: HeadingToc['level']
     headerMenus?:BlogHeaderMenu[]
     mainPage?: GithubBlogShowPath,
     git: {
