@@ -34,9 +34,11 @@ function MarkDownPreview({title, data}:MarkDownPreviewProps){
                 <DynamicAlertWrapComponent>
                     <ul>
                         {tableOfContents.map(({id,title,level}) => {
-                            return <li style={{
-                                marginLeft: `${parseInt(level)}rem`
-                            }}>
+                            return <li 
+                                key={`${id}`}
+                                style={{
+                                    marginLeft: `${parseInt(level)}rem`
+                                }}>
                                 <a href={`#${id}`}>{title}</a>
                             </li>
                         })}
