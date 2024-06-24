@@ -21,14 +21,7 @@ const userConfig = GithubBlogConfig({
     }],
     mainPage: {
         type: 'markdown-viewer',
-        path: 'blog/docs/nextjs-github-blog/readme.md',
-        alertLevel: 'secondary',
-        alert: [{
-            githubBlogShowPath: {
-                type: 'markdown-viewer',
-                path: 'blog/Resume/item/Hello World!.md',
-            }
-        }]
+        path: 'blog/docs/nextjs-github-blog/readme.md'
     },
     githubBlogShowPaths:[{
         type: 'profile',
