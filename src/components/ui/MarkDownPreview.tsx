@@ -24,7 +24,7 @@ function MarkDownPreview({title, data}:MarkDownPreviewProps){
         <>
             {title &&
                 <MarkDownHeadTitle>
-                    {title}
+                    {decodeURIComponent(title)}
                 </MarkDownHeadTitle>}
             <article
                 className={"markdown-body dark"}
