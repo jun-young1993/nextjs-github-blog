@@ -6,7 +6,7 @@ import {notFound, redirect} from "next/navigation";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import APP_CONFIG, {NEXT_CONFIG} from "@/utills/config/config";
 import { PathsPageParams } from "@/interfaces/root-page.interface";
-import {constants} from "http2";
+
 
 interface Params extends PathsPageParams{
 

@@ -8,7 +8,10 @@ interface MarkDownPreviewProps{
     title?: string | undefined
     data?: string
 }
-function MarkDownPreview({title, data}:MarkDownPreviewProps){
+function MarkDownPreview({
+    title, 
+    data
+}:MarkDownPreviewProps){
     let tableOfContents:HeadingToc[] | []  = []
     if(data){
         data = replaceWikiLink(data)   

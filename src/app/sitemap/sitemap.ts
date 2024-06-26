@@ -5,6 +5,7 @@ import { constants } from 'http2';
 import { GithubContentInterface } from '@/interfaces/github-user.interface';
 
 interface SiteMapGenerateType {id: number};
+export const dynamic = 'force-dynamic';
 export async function generateSitemaps(){
     const githubBlogShowPaths = getUserConfig('githubBlogShowPaths');
     const init:SiteMapGenerateType[] = [{

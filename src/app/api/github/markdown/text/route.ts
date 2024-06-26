@@ -8,22 +8,9 @@ export async function POST(req: Request): Promise<Response>
 {
     try{
 
-        const {path} = await req.json();
-
-        const DOMAIN = getUserConfig('domain')
-        const getContentUrl = `${DOMAIN}/api/github/contents/${path}`;
-        if(!path.endsWith('.md')){
-            throw new Error('This is not a Markdown page.')
-        }
-        const contentResponse = await fetch(getContentUrl,{
-            method: 'GET',
-            cache: 'no-store'
-        });
-        const result = await contentResponse.json();
-        let text = Buffer.from(result.content, result.encoding).toString('utf8');
-
-        const response = await convertToGithubMarkDown(text);
-
+        const {text} = await req.json();
+	const response = await convertToGithubMarkDown(text);
+        
         const {status, statusText } = response;
         if(status !== constants.HTTP_STATUS_OK){
             throw new Error(`Request failed with status ${status}: ${statusText}`);

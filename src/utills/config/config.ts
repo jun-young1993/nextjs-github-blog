@@ -2,11 +2,11 @@ import {AppConfigType} from "@/utills/config/config.type";
 import { getEnv } from "./get-value.config";
 import getUserConfig from "./get-user.config";
 
-const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<string>('GIT_HUB_PERSONAL_ACCESS_TOKEN');
-const GIT_HUB_API_VERSION = '2022-11-28';
+const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<string | null>('GIT_HUB_PERSONAL_ACCESS_TOKEN',null);
+export const GIT_HUB_API_VERSION = '2022-11-28';
 const GIT_HUB_API_URL = 'https://api.github.com';
 const GITHUB_RAW_CONTENT_URL = 'https://raw.githubusercontent.com';
-const SITE_DOMAIN = getUserConfig('domain');
+export const SITE_DOMAIN = getUserConfig('domain');
 const GIT_HUB_PERSONAL_REPOSITORY_NAME = getUserConfig('git').repository;
 const GIT_HUB_PERSONAL_REPOSITORY_OWNER = getUserConfig('git').owner;
 const GIT_HUB_PERSONAL_REPOSITORY_BRANCH = getUserConfig('git').branch ?? 'main';
@@ -79,7 +79,13 @@ const APP_CONFIG: AppConfigType = {
         },
         images: (path: string) => {
             return `${SITE_DOMAIN}/api/github/images/${path}`
-        }
+        },
+        markdown: () => {
+            return `${SITE_DOMAIN}/api/github/markdown`
+        },
+        markdownText: () => {
+            return `${SITE_DOMAIN}/api/github/markdown/text`
+        },
     }
 
 }

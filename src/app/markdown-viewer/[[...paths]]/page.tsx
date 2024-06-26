@@ -4,17 +4,34 @@ import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
 import { PathsPageParams } from "@/interfaces/root-page.interface";
 import getUserConfig from "@/utills/config/get-user.config";
 import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
-import {NEXT_CONFIG} from "@/utills/config/config";
+import APP_CONFIG, {NEXT_CONFIG} from "@/utills/config/config";
 import MarkDownPreview from "@/components/ui/MarkDownPreview";
+import { Metadata, ResolvingMetadata } from "next";
 
 
 export interface Params extends PathsPageParams {
     
 }
 
+export async function generateMetadata(
+    { params }: Params,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const {paths} = params;
+    const path = nextSlugGitContentsPath(paths);
+    const title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
+    const parentMetadata = await parent ?? {};
+    const metadata = Promise.resolve(Object.assign({},parentMetadata,{
+        title: title,
+    })) as Promise<Metadata>;
+
+    return metadata;
+}
+
 async function getData(path: string): Promise<{data: string}> {
     const DOMAIN = getUserConfig('domain')
-    const url = `${DOMAIN}/api/github/markdown`
+    const { APP_END_POINT} = APP_CONFIG;
+    const url = APP_END_POINT.markdown();
 
     const response = await fetch(url,{
         method: "POST",
