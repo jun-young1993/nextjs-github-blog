@@ -34,7 +34,7 @@ const userConfig = GithubBlogConfig({
     },{
         type: 'issue',
         path: '/',
-        title: 'Guest Book'
+        title: 'Issue'
     }],
     userSitemap: [
         'ads.txt'

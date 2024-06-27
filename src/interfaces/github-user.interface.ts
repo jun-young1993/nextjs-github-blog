@@ -1,6 +1,8 @@
 export interface GithubUserInterface {
 	login: string
 	avatar_url: string
+	email: string
+	name: string
 }
 
 export interface GithubContentInterface {
