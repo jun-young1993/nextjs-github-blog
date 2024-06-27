@@ -12,6 +12,7 @@ export interface AppConfigType {
     GOOGLE_ANALYTICS_SCRIPT_SRC?: string
     GIT_HUB_API_END_POINT: {
         repos: {
+            cacheContent: (path: string) => string
             contents: (path: string) => string
             trees: (treeSha: string) => string
             readme: (repo: string) => string,

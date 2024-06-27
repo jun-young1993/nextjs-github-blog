@@ -1,3 +1,5 @@
+import {GithubContentInterface} from "@/interfaces/github-user.interface";
+
 export interface BlogErrorLike {
 	status: number;
 	statusText: Error;

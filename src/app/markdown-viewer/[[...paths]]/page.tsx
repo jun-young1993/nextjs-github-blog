@@ -7,6 +7,7 @@ import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug
 import APP_CONFIG, {NEXT_CONFIG} from "@/utills/config/config";
 import MarkDownPreview from "@/components/ui/MarkDownPreview";
 import { Metadata, ResolvingMetadata } from "next";
+import {convertToGithubMarkDownByContent, getContent} from "@/utills/blog-fetch";
 
 
 export interface Params extends PathsPageParams {
@@ -53,13 +54,14 @@ export default async function Page({ params }: Params){
     try{
         const {paths, container} = params;
         const path = nextSlugGitContentsPath(paths);
-        const {data} = await getData(path);
+
+        // const {response: data} = await convertToGithubMarkDownByContent(path);
 
         let title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
         if(title && title?.endsWith(".md")){
             title = title.slice(0,-3);
         }
-
+        const {response: data} = await convertToGithubMarkDownByContent(path);
         return (
             <ContainerLayout
                 {...container}

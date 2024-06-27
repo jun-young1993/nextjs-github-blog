@@ -2,7 +2,6 @@ import MarkDownHeadTitle from "@/components/ui/MarkDownHeadTitle";
 import {TABLE_OF_CONTENTS, WIKI_LINK} from "@/utills/config/config";
 import replaceWikiLink from "@/utills/markdown/wiki-link";
 import DynamicAlertWrapComponent from "../dynamic/DynamicAlertWrap";
-import tableOfContents from "@/utills/table-of-contents";
 import replaceHeadings, { HeadingToc } from "@/utills/markdown/heading";
 interface MarkDownPreviewProps{
     title?: string | undefined

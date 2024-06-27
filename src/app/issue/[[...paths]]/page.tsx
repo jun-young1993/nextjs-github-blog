@@ -13,7 +13,7 @@ export default async function Page({ params }:Params){
 	const {paths:pathArray, container} = params;
 	const path = nextSlugGitContentsPath(pathArray);
 	const {response: result} = await createOrUpdateContent(path, JSON.stringify({
-		test: 'hi'
+		test: 'bye'
 	}));
 	console.log(result);
 	return (
