@@ -2,8 +2,10 @@
 import APP_CONFIG from "@/utills/config/config";
 import { GithubComment, GithubCommentProps, ActiveModeType, ActiveMode } from "juny-react-style";
 import {  useState } from "react";
-
-const DynamicGithubComment = (props:GithubCommentProps) => {
+interface GithubCommentComponentProps extends GithubCommentProps {
+	issueNumber: number
+}
+const DynamicGithubComment = (props:GithubCommentComponentProps) => {
 	const {APP_END_POINT} = APP_CONFIG;
 	const [active, setActive] = useState<ActiveModeType>(ActiveMode.WRITE);
 	const [markdown, setMarkdown] = useState<undefined | string>();

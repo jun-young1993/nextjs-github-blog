@@ -42,8 +42,11 @@ const APP_CONFIG: AppConfigType = {
     },
     GIT_HUB_API_END_POINT: {
         repos: {
+            issues: (issueNumber) => {
+                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/issues`+(issueNumber ? (`/${issueNumber}`) : '');
+            },
             cacheContent: (path: string) => {
-                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/_cache/${path}/cache.md`;
+                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/_cache/${path && (path+'/')}cache.md`;
             },
             contents: (path: string) => {
                 return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/${path}`;

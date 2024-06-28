@@ -3,7 +3,7 @@ import APP_CONFIG, {NEXT_CONFIG} from "./config/config";
 import {isBlogError, isGithubContent} from "./type-guard";
 import { firstVisit } from "./defined/cookie";
 import { constants } from "http2";
-import {GithubContentInterface, GithubUserInterface} from "@/interfaces/github-user.interface";
+import {GithubContentInterface, GithubIssueInterface, GithubUserInterface} from "@/interfaces/github-user.interface";
 
 
 interface BlogFetchInterface {
@@ -14,6 +14,7 @@ interface BlogFetchInterface {
 	body?: BodyInit;
 	next?:  NextFetchRequestConfig 
 	responseType?: 'json' | 'text'
+	successStatus?: number[]
 
 }
 interface BlogFetchResponse<T>{
@@ -33,7 +34,8 @@ export async function blogFetch<T>({
 	headers,
 	body,
 	next,
-	responseType = 'json'
+	responseType = 'json',
+	successStatus = [constants.HTTP_STATUS_OK,constants.HTTP_STATUS_CREATED]
 	}: BlogFetchInterface
 ): Promise<BlogFetchResponse<T> | never> {
 	try {
@@ -52,8 +54,7 @@ export async function blogFetch<T>({
 		const response = await result[responseType]();
 		
 		if(
-			status === constants.HTTP_STATUS_OK 
-			&& status === constants.HTTP_STATUS_CREATED
+			!successStatus.includes(status)
 		){
 			throw new Error(`Request failed with status ${status}: ${statusText}`);
 		}
@@ -64,6 +65,7 @@ export async function blogFetch<T>({
 			response
 		};
 	} catch (e) {
+
 		if (isBlogError(e)) {
 			throw {
 				status: e.status || 500,
@@ -71,7 +73,7 @@ export async function blogFetch<T>({
 			};
 		}
 		throw {
-			statusText: 'unknown',
+			statusText: e.toString() || 'unknown',
 			status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,
 		};
 	}
@@ -92,20 +94,23 @@ export async function getGithubUser()
 	});
 
 }
-async function getGithubContents(path: string){
+async function getGithubContents(path: string, initOptions?: BlogFetchInterface){
 	const url = GIT_HUB_API_END_POINT.repos.contents(path);
 	const result = await blogFetch<GithubContentInterface>({
 		endpoint: url,
 		headers: GIT_HUB_API_REQUEST_HEADER,
-		next: {revalidate: NEXT_CONFIG.cache.revalidate}
+		next: {revalidate: NEXT_CONFIG.cache.revalidate},
+			...(initOptions && initOptions)
 	});
 
 	return result;
 
 }
+
 export async function getContent(path: string){
 	return getGithubContents<GithubContentInterface>(path);
 }
+
 export async function getContents(path: string){
 	return getGithubContents<GithubContentInterface[]>(path);
 }
@@ -114,7 +119,7 @@ export async function convertToGithubMarkDownByContent(path: string){
 	if(!path.endsWith('.md')){
 		throw new Error('This is not a Markdown page.')
 	}
-	const {response: data} = await getContent(path);
+	const {response: data} = await getContent<GithubContentInterface>(path);
 	if(typeof data !== 'object'){
 		throw new Error('This is not object');
 	}
@@ -123,8 +128,8 @@ export async function convertToGithubMarkDownByContent(path: string){
 	return await convertToGithubMarkDown(text);
 
 }
-export async function convertToGithubMarkDown(text: string){
 
+export async function convertToGithubMarkDown(text: string){
 	const response = await blogFetch({
 		endpoint: GIT_HUB_API_END_POINT.markdown(),
 		method: "POST",
@@ -134,29 +139,74 @@ export async function convertToGithubMarkDown(text: string){
 	});
 	return response;
 }
-export async function createOrUpdateContent(path: string, content: string){
+export async function getCache(path: string){
 	const url = GIT_HUB_API_END_POINT.repos.cacheContent(path);
 
+	return await getGithubContents(path, {
+		endpoint: url,
+		successStatus: [constants.HTTP_STATUS_NOT_FOUND, constants.HTTP_STATUS_OK]
+	});
+}
+export async function getCacheData(path: string){
+	try{
+		const {response: data} = await getCache(path);
+		const text = Buffer.from(data.content, data.encoding).toString('utf8');
+		return JSON.parse(text);
+	}catch(error){
+		return {};
+	}
+
+
+}
+export async function createOrUpdateCache(path: string, content: string){
+	const url = GIT_HUB_API_END_POINT.repos.cacheContent(path);
 	const {response: user} = await getGithubUser();
-
-
-
+	const {response: result} = await getGithubContents(path, {
+		endpoint: url,
+		successStatus: [constants.HTTP_STATUS_NOT_FOUND, constants.HTTP_STATUS_OK]
+	});
 	return await blogFetch({
 		endpoint: url,
 		method: "PUT",
 		headers: GIT_HUB_API_REQUEST_HEADER,
 		body: JSON.stringify({
-		    message: `create or update cache file ${new Date().toTimeString()}`,
-		    content: Buffer.from(content).toString('base64'),
-		    author: {
-			name: user.name,
-			email: user.email
-		    },
-		    committer: {
-			name: user.name,
-			email: user.email
-		    }
-		}),
+			sha: result.sha,
+			message: `create or update cache file ${new Date().toTimeString()}`,
+			content: Buffer.from(content).toString('base64'),
+			author: {
+				name: user.name,
+				email: user.email
+			},
+			committer: {
+				name: user.name,
+				email: user.email
+			}
+		})
 	});
 }
 
+export async function getIssues(issueNumber: number){
+	const url = GIT_HUB_API_END_POINT.repos.issues(issueNumber);
+	return await blogFetch<GithubIssueInterface>({
+		endpoint: url,
+		method: "GET",
+		headers: GIT_HUB_API_REQUEST_HEADER,
+		successStatus: [constants.HTTP_STATUS_OK]
+	})
+}
+
+export async function createIssues(
+	title = 'no title'
+){
+	const url = GIT_HUB_API_END_POINT.repos.issues();
+
+	return await blogFetch<GithubIssueInterface>({
+		endpoint: url,
+		method: "POST",
+		headers: GIT_HUB_API_REQUEST_HEADER,
+		successStatus: [constants.HTTP_STATUS_CREATED],
+		body: JSON.stringify({
+			title: title
+		})
+	})
+}

@@ -29,34 +29,11 @@ export async function generateMetadata(
     return metadata;
 }
 
-async function getData(path: string): Promise<{data: string}> {
-    const DOMAIN = getUserConfig('domain')
-    const { APP_END_POINT} = APP_CONFIG;
-    const url = APP_END_POINT.markdown();
-
-    const response = await fetch(url,{
-        method: "POST",
-        body: JSON.stringify({
-            path: path
-        }),
-        next: {revalidate: NEXT_CONFIG.cache.revalidate}
-    });
-
-
-    const result = await response.json();
-    
-    return {
-        data: result.content
-    }
-}
-
 export default async function Page({ params }: Params){
     try{
         const {paths, container} = params;
         const path = nextSlugGitContentsPath(paths);
-
-        // const {response: data} = await convertToGithubMarkDownByContent(path);
-
+        
         let title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
         if(title && title?.endsWith(".md")){
             title = title.slice(0,-3);

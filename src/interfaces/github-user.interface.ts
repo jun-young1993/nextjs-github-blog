@@ -13,3 +13,7 @@ export interface GithubContentInterface {
 	content: string
 	path: string
 }
+
+export interface GithubIssueInterface {
+	number: number
+}
