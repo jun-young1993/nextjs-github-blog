@@ -10,6 +10,7 @@ export interface GitUserDataContextType {
 const UserDataContext = createContext<GitUserDataContextType | undefined>(undefined);
 async function getData() {
     const response = await fetch('/api/github/user');
+    
     const result: GithubUserInterface = await response.json();
     return result;
 }

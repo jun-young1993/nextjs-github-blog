@@ -23,6 +23,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: getUserConfig('title'),
   description: getUserConfig('description'),
+  robots: {
+    follow: true,
+    index: true
+  },
   openGraph: {
     url: getUserConfig('domain'),
     type: "website",

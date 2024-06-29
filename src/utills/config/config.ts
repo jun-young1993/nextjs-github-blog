@@ -2,11 +2,11 @@ import {AppConfigType} from "@/utills/config/config.type";
 import { getEnv } from "./get-value.config";
 import getUserConfig from "./get-user.config";
 
-const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<string>('GIT_HUB_PERSONAL_ACCESS_TOKEN');
-const GIT_HUB_API_VERSION = '2022-11-28';
+const GIT_HUB_PERSONAL_ACCESS_TOKEN = getEnv<string | null>('GIT_HUB_PERSONAL_ACCESS_TOKEN',null);
+export const GIT_HUB_API_VERSION = '2022-11-28';
 const GIT_HUB_API_URL = 'https://api.github.com';
 const GITHUB_RAW_CONTENT_URL = 'https://raw.githubusercontent.com';
-const SITE_DOMAIN = getUserConfig('domain');
+export const SITE_DOMAIN = getUserConfig('domain');
 const GIT_HUB_PERSONAL_REPOSITORY_NAME = getUserConfig('git').repository;
 const GIT_HUB_PERSONAL_REPOSITORY_OWNER = getUserConfig('git').owner;
 const GIT_HUB_PERSONAL_REPOSITORY_BRANCH = getUserConfig('git').branch ?? 'main';
@@ -27,7 +27,9 @@ export const NEXT_CONFIG:{
         revalidate: getUserConfig('nextConfig')?.cache?.revalidate ?? false
     }
 }
-
+const issueEndpoint = (issueNumber?: number) => {
+    return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/issues`+(issueNumber ? (`/${issueNumber}`) : '');
+}
 const APP_CONFIG: AppConfigType = {
     SITE_DOMAIN: SITE_DOMAIN,
     GIT_HUB_API_URL: GIT_HUB_API_URL,
@@ -42,6 +44,15 @@ const APP_CONFIG: AppConfigType = {
     },
     GIT_HUB_API_END_POINT: {
         repos: {
+            issues: (issueNumber) => {
+                return issueEndpoint(issueNumber);
+            },
+            comments: (issueNumber) => {
+                return issueEndpoint(issueNumber)+'/comments';
+            },
+            cacheContent: (path: string) => {
+                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/_cache/${path && (path+'/')}cache.md`;
+            },
             contents: (path: string) => {
                 return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/${path}`;
             },
@@ -72,6 +83,9 @@ const APP_CONFIG: AppConfigType = {
             },
             readme: (repo: string) => {
                 return `${SITE_DOMAIN}/api/github/readme/${repo}`
+            },
+            comments:(issueNumber: number) => {
+                return `${SITE_DOMAIN}/api/github/issues/comments/${issueNumber}`
             }
         },
         user: () => {
@@ -79,7 +93,13 @@ const APP_CONFIG: AppConfigType = {
         },
         images: (path: string) => {
             return `${SITE_DOMAIN}/api/github/images/${path}`
-        }
+        },
+        markdown: () => {
+            return `${SITE_DOMAIN}/api/github/markdown`
+        },
+        markdownText: () => {
+            return `${SITE_DOMAIN}/api/github/markdown/text`
+        },
     }
 
 }

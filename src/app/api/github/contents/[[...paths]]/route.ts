@@ -3,7 +3,6 @@ import {NextResponse} from "next/server";
 import APP_CONFIG from "@/utills/config/config";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
-import {notFound} from "next/navigation";
 type Params = {
     params: {
         paths?: [] | string[]

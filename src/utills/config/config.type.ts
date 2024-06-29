@@ -5,13 +5,16 @@ export interface AppConfigType {
     SITE_DOMAIN: string
     GIT_HUB_API_URL: string
     GIT_HUB_API_VERSION: string
-    GIT_HUB_PERSONAL_ACCESS_TOKEN: string
+    GIT_HUB_PERSONAL_ACCESS_TOKEN: string | null
     GIT_HUB_PERSONAL_REPOSITORY_NAME: string
     GIT_HUB_PERSONAL_REPOSITORY_OWNER: string
-    GIT_HUB_API_REQUEST_HEADER: {[key: string]: string}
+    GIT_HUB_API_REQUEST_HEADER: HeadersInit
     GOOGLE_ANALYTICS_SCRIPT_SRC?: string
     GIT_HUB_API_END_POINT: {
         repos: {
+            issues: (issueNumber?: number) => string
+            comments: (issueNumber: number) => string
+            cacheContent: (path: string) => string
             contents: (path: string) => string
             trees: (treeSha: string) => string
             readme: (repo: string) => string,
@@ -24,17 +27,20 @@ export interface AppConfigType {
         repos: {
             contents: (path: string) => string
             trees: (treeSha: string) => string
-            readme: (repo: string) => string
+            readme: (repo: string) => string,
+            comments: (issueNumber: number) => string
         },
         user: () => string,
         images: (path: string) => string
-
+        markdown: () => string
+        markdownText: () => string
     }
 }
 export const GithubBlogShowPathTypeEnum  = {
     CONTENTS: 'contents',
     PROFILE:'profile',
-    MARKDOWN: 'markdown-viewer'
+    MARKDOWN: 'markdown-viewer',
+    ISSUE: 'issue'
 } as const;
 export type GithubBlogShowPathType = typeof GithubBlogShowPathTypeEnum [keyof typeof GithubBlogShowPathTypeEnum];
 export enum GithubBlogShowPathSrc {
@@ -60,6 +66,7 @@ export interface BlogHeaderMenu extends GithubBlogShowPath {
 
 export interface GithubBlogConfigType {
     title: string
+    dynamicTitle?: boolean
     description: string
     domain: string
     webSiteImage?: string

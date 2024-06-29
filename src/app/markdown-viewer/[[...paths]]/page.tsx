@@ -4,45 +4,41 @@ import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
 import { PathsPageParams } from "@/interfaces/root-page.interface";
 import getUserConfig from "@/utills/config/get-user.config";
 import {nextSlugGeneratePaths, nextSlugGitContentsPath} from "@/utills/next-slug.utills";
-import {NEXT_CONFIG} from "@/utills/config/config";
+import APP_CONFIG, {NEXT_CONFIG} from "@/utills/config/config";
 import MarkDownPreview from "@/components/ui/MarkDownPreview";
+import { Metadata, ResolvingMetadata } from "next";
+import {convertToGithubMarkDownByContent, getContent} from "@/utills/blog-fetch";
 
 
 export interface Params extends PathsPageParams {
     
 }
 
-async function getData(path: string): Promise<{data: string}> {
-    const DOMAIN = getUserConfig('domain')
-    const url = `${DOMAIN}/api/github/markdown`
+export async function generateMetadata(
+    { params }: Params,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const {paths} = params;
+    const path = nextSlugGitContentsPath(paths);
+    const title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
+    const parentMetadata = await parent ?? {};
+    const metadata = Promise.resolve(Object.assign({},parentMetadata,{
+        title: title,
+    })) as Promise<Metadata>;
 
-    const response = await fetch(url,{
-        method: "POST",
-        body: JSON.stringify({
-            path: path
-        }),
-        next: {revalidate: NEXT_CONFIG.cache.revalidate}
-    });
-
-
-    const result = await response.json();
-    
-    return {
-        data: result.content
-    }
+    return metadata;
 }
 
 export default async function Page({ params }: Params){
     try{
         const {paths, container} = params;
         const path = nextSlugGitContentsPath(paths);
-        const {data} = await getData(path);
-
+        
         let title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
         if(title && title?.endsWith(".md")){
             title = title.slice(0,-3);
         }
-
+        const {response: data} = await convertToGithubMarkDownByContent(path);
         return (
             <ContainerLayout
                 {...container}
