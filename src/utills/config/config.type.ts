@@ -13,6 +13,7 @@ export interface AppConfigType {
     GIT_HUB_API_END_POINT: {
         repos: {
             issues: (issueNumber?: number) => string
+            comments: (issueNumber: number) => string
             cacheContent: (path: string) => string
             contents: (path: string) => string
             trees: (treeSha: string) => string
@@ -26,7 +27,8 @@ export interface AppConfigType {
         repos: {
             contents: (path: string) => string
             trees: (treeSha: string) => string
-            readme: (repo: string) => string
+            readme: (repo: string) => string,
+            comments: (issueNumber: number) => string
         },
         user: () => string,
         images: (path: string) => string

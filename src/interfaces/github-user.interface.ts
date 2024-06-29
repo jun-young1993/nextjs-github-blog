@@ -17,3 +17,10 @@ export interface GithubContentInterface {
 export interface GithubIssueInterface {
 	number: number
 }
+
+export interface GithubIssueCommentInterface {
+	node_id: string
+	body: string
+	updated_at: Date
+	created_at: Date
+}

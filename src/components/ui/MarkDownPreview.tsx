@@ -6,10 +6,12 @@ import replaceHeadings, { HeadingToc } from "@/utills/markdown/heading";
 interface MarkDownPreviewProps{
     title?: string | undefined
     data?: string
+    isTableOfContent?: boolean
 }
 function MarkDownPreview({
     title, 
-    data
+    data,
+    isTableOfContent = true
 }:MarkDownPreviewProps){
     let tableOfContents:HeadingToc[] | []  = []
     if(data){
@@ -32,25 +34,30 @@ function MarkDownPreview({
                 className={"markdown-body dark"}
                 dangerouslySetInnerHTML={{__html: data ?? 'not found'}}>
             </article>
-            {(TABLE_OF_CONTENTS && (tableOfContents.length > 0)) &&
-                <DynamicAlertWrapComponent>
+            {isTableOfContent && (TABLE_OF_CONTENTS && (tableOfContents.length > 0)) &&
+                <DynamicAlertWrapComponent
+                    position={undefined} 
+                    index={0} 
+                    gap={""}
+                >
                     <ul>
-                        {tableOfContents.map(({id,title,level}) => {
-                            return <li 
-                                key={`${id}`}
-                                style={{                    
-
-                                    marginLeft: `${parseInt(level)-1}rem`
-                                }}>
-                                <a style={{
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                }}href={`#${id}`}>{title}</a>
-                            </li>
-                        })}
-                    </ul>
+                            {tableOfContents.map(({ id, title, level }) => {
+                                return <li
+                                    key={`${id}`}
+                                    style={{
+                                        marginLeft: `${parseInt(level) - 1}rem`
+                                    }}>
+                                    <a style={{
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                    }} href={`#${id}`}>{title}</a>
+                                </li>;
+                            })}
+                        </ul>
                 </DynamicAlertWrapComponent>
+                    
+                
             }
         </>
     )

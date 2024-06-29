@@ -1,22 +1,21 @@
 import { NextResponse} from "next/server";
-import APP_CONFIG, {NEXT_CONFIG} from "@/utills/config/config";
 import {constants} from "http2";
-import getUserConfig from "@/utills/config/get-user.config";
-import { convertToGithubMarkDown } from "@/utills/route-fetch";
+import { convertToGithubMarkDown } from "@/utills/blog-fetch";
 
+/**
+ * client 에서 사용하는건 api 다시 뽑음.. 토큰 노출됨
+ * 
+ * @param req 
+ * @returns 
+ */
 export async function POST(req: Request): Promise<Response>
 {
     try{
-
-        const {text} = await req.json();
-	const response = await convertToGithubMarkDown(text);
         
-        const {status, statusText } = response;
-        if(status !== constants.HTTP_STATUS_OK){
-            throw new Error(`Request failed with status ${status}: ${statusText}`);
-        }
-        const markdownContent = await response.text();
-
+        const {text} = await req.json();
+	    const {response: markdownContent} = await convertToGithubMarkDown(text);
+        
+    
         return NextResponse.json({
             content: markdownContent,
             headers: {
