@@ -26,18 +26,8 @@ export default async function Page({ params }:Params){
 	}
 
 	const {issueNumber} = cache;
-	const response =await fetch(APP_END_POINT.repos.comments(issueNumber));
-	const {body: issues} = await response.json() as {body: GithubIssueCommentInterface[] | []};
-	
-	
-	const resultIssues = await Promise.all(issues.map(async ({body, ...issue}) => {
-		const {response: markdownContent} = await convertToGithubMarkDown(body);
-		
-		return {
-			body: markdownContent,
-			...issue
-		}
-	}));
+	const {response: issues} =await getIssueComments(issueNumber);
+
 	
 	return (
 
@@ -47,7 +37,7 @@ export default async function Page({ params }:Params){
 			<DynamicGithubCommentComponent 
 				issueNumber={issueNumber}
 			/>
-			{resultIssues.map((issue) => {
+			{issues.map((issue) => {
 				return <DynamicGithubReplyComponent 
 					key={issue.node_id}
 					item={issue}

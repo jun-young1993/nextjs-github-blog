@@ -42,6 +42,11 @@ const APP_CONFIG: AppConfigType = {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': GIT_HUB_API_VERSION
     },
+    GIT_HUB_API_REQUEST_MARKDOWN_HEADER: {
+        'Authorization': `Bearer ${GIT_HUB_PERSONAL_ACCESS_TOKEN}`,
+        'Accept': 'application/vnd.github.html+json',
+        'X-GitHub-Api-Version': GIT_HUB_API_VERSION
+    },
     GIT_HUB_API_END_POINT: {
         repos: {
             issues: (issueNumber) => {

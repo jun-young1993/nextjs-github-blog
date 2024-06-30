@@ -2,8 +2,10 @@
 import MarkDownPreview from "@/components/ui/MarkDownPreview";
 import APP_CONFIG from "@/utills/config/config";
 import { GithubComment, GithubCommentProps, ActiveModeType, ActiveMode } from "juny-react-style";
-import { useRouter } from "next/navigation";
-import {  useState } from "react";
+import {usePathname, useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {footerId} from "@/utills/defined/dom-id";
+
 
 interface GithubCommentComponentProps extends GithubCommentProps {
 	issueNumber: number
@@ -11,9 +13,10 @@ interface GithubCommentComponentProps extends GithubCommentProps {
 const DynamicGithubComment = ({issueNumber, ...props}:GithubCommentComponentProps) => {
 	const {APP_END_POINT} = APP_CONFIG;
 	const router = useRouter();
+	const pathname = usePathname();
 	const [active, setActive] = useState<ActiveModeType>(ActiveMode.WRITE);
-	const [markdown, setMarkdown] = useState<undefined | string>();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [markdown, setMarkdown] = useState<undefined | string>(undefined);
+	const [isLoading, setIsLoading] = useState<boolean|undefined>(undefined);
 	const handleClickTab = async function(value: ActiveModeType, comment: string){
 		const result = await fetch(APP_END_POINT.markdownText(),{
 			method: "POST",
@@ -27,29 +30,36 @@ const DynamicGithubComment = ({issueNumber, ...props}:GithubCommentComponentProp
 	
 	const handleSubmit = async function(comment: string)
 	{
-		setIsLoading(true);
-		fetch(APP_END_POINT.repos.comments(issueNumber),{
+		await setIsLoading(true);
+		await fetch(APP_END_POINT.repos.comments(issueNumber),{
 			method: "POST",
 			body:JSON.stringify({text: comment})
-		}).then(()=>{
-			setIsLoading(false);
-			router.refresh()
-		})
-		.catch(() => {
-			setIsLoading(false);
-		})
-		
+		});
+		await setIsLoading(false);
+
+
+
+		router.refresh();
+		const timer = setTimeout(() => {
+
+			router.replace(`${pathname}/#${footerId}`);
+			clearTimeout(timer);
+		},300);
 		
 	}
+
+
+
 	return <GithubComment 
 		onClick={handleClickTab}
-		onSubmit={(comment) => {
-			handleSubmit(comment);
+		onSubmit={async (comment) => {
+			await handleSubmit(comment);
 		}}
-		isLoading={isLoading}
+		isLoading={isLoading ?? false}
 		active={active}
-		preview={<MarkDownPreview data={markdown} isTableOfContent={false} />}
+		preview={markdown && <MarkDownPreview data={markdown} isTableOfContent={false} />}
 		{...props} 
 	/>
 }
+
 export default DynamicGithubComment;

@@ -10,21 +10,23 @@ import TAGS from "./defined/tags";
 
 interface BlogFetchInterface {
 	endpoint: string;
-	method?: "GET" | "POST" | "PUT";
+	method: RequestInit['method'];
 	cache?: RequestCache;
 	headers?: HeadersInit;
 	body?: BodyInit;
+	body_html?: BodyInit,
 	next?:  NextFetchRequestConfig
 	tags?: string[]
 	responseType?: 'json' | 'text'
 	successStatus?: number[]
 
 }
-interface BlogFetchResponse<T>{
+interface BlogFetchResponse<T = never>{
 	status: number; statusText?: string, response: T
 }
 const {
 	GIT_HUB_API_REQUEST_HEADER,
+	GIT_HUB_API_REQUEST_MARKDOWN_HEADER,
 	GIT_HUB_API_END_POINT,
 } = APP_CONFIG;
 export async function blogFetch<T>({
@@ -53,7 +55,8 @@ export async function blogFetch<T>({
 		const {status, statusText} = result;
 		
 		const response = await result[responseType]();
-		
+
+		console.log("=>(blog-fetch.ts:57) response", response);
 		if(
 			!successStatus.includes(status)
 		){
@@ -78,6 +81,16 @@ export async function blogFetch<T>({
 			status: HttpStatus.HTTP_STATUS_INTERNAL_SERVER_ERROR,
 		};
 	}
+}
+
+export async function NextBlogFetchResponse<T>(blogFetchResponse:BlogFetchResponse<T>){
+	const { status, statusText, response } = blogFetchResponse;
+	return NextResponse.json({
+		error: statusText,
+		...response,
+	},{
+		status: status,
+	});
 }
 
 export async function revalidate(req: NextRequest, {tag, body}:{tag?: string, body?: object}): Promise<NextResponse>
@@ -227,18 +240,18 @@ export async function createIssues(
 
 export async function getIssueComments(
 	issueNumber: number,
-	options?: {sort?: 'created_at' | 'updated_at', direction?: 'desc' | 'asc'}
+	options?: {sort?: 'created' | 'updated', direction?: 'desc' | 'asc'}
 ){
-	const { sort = 'created_at', direction = 'desc' } = options || {};
-	const url = GIT_HUB_API_END_POINT.repos.comments(issueNumber)+`?sort=${sort}&direction=${direction}`;
+
+	const { sort = 'updated', direction = 'asc' } = options || {};
+	const url = GIT_HUB_API_END_POINT.repos.comments(issueNumber)+`?sort=${sort}&direction=${direction}&per_page=100&page=${1}`;
 	
 	return await blogFetch<GithubIssueCommentInterface[] | []>({
 		endpoint: url,
 		method: "GET",
-		headers: GIT_HUB_API_REQUEST_HEADER,
+		headers: GIT_HUB_API_REQUEST_MARKDOWN_HEADER,
 		successStatus: [HttpStatus.HTTP_STATUS_OK],
 		tags: [TAGS.comment],
-		cache: 'no-store'
 	})
 	
 }
@@ -246,13 +259,14 @@ export async function getIssueComments(
 export async function createIssueComments(issueNumber: number, content: string){
 	const url = GIT_HUB_API_END_POINT.repos.comments(issueNumber);
 	
-	return await blogFetch<GithubIssueCommentInterface>({
+	const result = await blogFetch<GithubIssueCommentInterface>({
 		endpoint: url,
 		method: "POST",
 		headers: GIT_HUB_API_REQUEST_HEADER,
 		successStatus: [HttpStatus.HTTP_STATUS_CREATED],
 		body: content,
-		tags: [TAGS.comment],
 		cache: 'no-store'
 	})
+	await revalidateTag(TAGS.comment);
+	return result;
 }

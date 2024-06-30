@@ -19,8 +19,9 @@ export interface GithubIssueInterface {
 }
 
 export interface GithubIssueCommentInterface {
+	id: number
 	node_id: string
-	body: string
+	body_html: string
 	updated_at: Date
 	created_at: Date
 }
