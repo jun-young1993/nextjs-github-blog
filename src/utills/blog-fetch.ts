@@ -10,7 +10,7 @@ import TAGS from "./defined/tags";
 
 interface BlogFetchInterface {
 	endpoint: string;
-	method: RequestInit['method'];
+	method?: RequestInit['method'];
 	cache?: RequestCache;
 	headers?: HeadersInit;
 	body?: BodyInit;
