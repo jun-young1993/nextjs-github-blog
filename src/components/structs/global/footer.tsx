@@ -19,6 +19,9 @@ function Footer() {
     return (
         <div
             id={footerId}
+            style={{
+                width: "100%"
+            }}
         >
         <MacMenuBar>
             {githubBlogShowPaths && githubBlogShowPaths.map(({path, type, src, title: configTitle}, index) => {
