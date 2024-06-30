@@ -56,7 +56,6 @@ export async function blogFetch<T>({
 		
 		const response = await result[responseType]();
 
-		console.log("=>(blog-fetch.ts:57) response", response);
 		if(
 			!successStatus.includes(status)
 		){

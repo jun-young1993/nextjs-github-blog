@@ -12,6 +12,7 @@ async function getData() {
     const response = await fetch('/api/github/user');
     
     const result: GithubUserInterface = await response.json();
+
     return result;
 }
 export default function UserDataProvider({ children }: { children: ReactNode }) {
