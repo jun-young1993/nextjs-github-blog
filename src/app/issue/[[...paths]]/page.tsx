@@ -28,7 +28,7 @@ export default async function Page({ params }:Params){
 	const {issueNumber} = cache;
 	const {response: issues} =await getIssueComments(issueNumber);
 
-	
+
 	return (
 
 		<ContainerLayout
@@ -37,7 +37,7 @@ export default async function Page({ params }:Params){
 			<DynamicGithubCommentComponent 
 				issueNumber={issueNumber}
 			/>
-			{issues.map((issue) => {
+			{issues.sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime() ).map((issue) => {
 				return <DynamicGithubReplyComponent 
 					key={issue.node_id}
 					item={issue}

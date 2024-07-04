@@ -1,4 +1,4 @@
-import { AlertWrap, AlertWrapProps, StyledAlert } from "juny-react-style"
+import { AlertWrap, AlertWrapProps, AlertItem } from "juny-react-style"
 import { useState } from "react";
 import { LeftArrowIcon, RightArrowIcon } from "react-symbol";
 import styled from "styled-components";
@@ -17,17 +17,23 @@ const DynamicAlertWrap = (props:AlertWrapProps) => {
 	return (
 		<>
 			<AlertWrap 
+				$backgroundColor={"rgba(0, 0, 0, 0.0)"}
 				$opacity={active ? "100%" : "50%"}
 				$topChildren={
-					<ArrowButton
-						onClick={handleClick}
+					<AlertItem 
+						level={"info"}
+						$backgroundColor={"rgba(0, 0, 0, 0.0)"}
 					>
-						{active 
-						? <LeftArrowIcon width="35px" height="20px" viewBox="0 0 24 12"/>
-						: <RightArrowIcon width="35px" height="20px" viewBox="0 0 24 12"/>
-						}
-						
-					</ArrowButton>
+						<ArrowButton
+							onClick={handleClick}
+						>
+							{active 
+							? <LeftArrowIcon width="35px" height="20px" viewBox="0 0 24 12" color="blue"/>
+							: <RightArrowIcon width="35px" height="20px" viewBox="0 0 24 12" color="blue"/>
+							}
+							
+						</ArrowButton>
+					</AlertItem>
 				}
 				$columnGap="0px"
 				$hiddenChildren={active}

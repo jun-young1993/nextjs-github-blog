@@ -40,11 +40,11 @@ const DynamicGithubComment = ({issueNumber, ...props}:GithubCommentComponentProp
 
 
 		router.refresh();
-		const timer = setTimeout(() => {
+		// const timer = setTimeout(() => {
 
-			router.replace(`${pathname}/#${footerId}`);
-			clearTimeout(timer);
-		},300);
+		// 	router.replace(`${pathname}/#${footerId}`);
+		// 	clearTimeout(timer);
+		// },300);
 		
 	}
 
@@ -54,6 +54,7 @@ const DynamicGithubComment = ({issueNumber, ...props}:GithubCommentComponentProp
 		onClick={handleClickTab}
 		onSubmit={async (comment) => {
 			await handleSubmit(comment);
+			return '';
 		}}
 		isLoading={isLoading ?? false}
 		active={active}
