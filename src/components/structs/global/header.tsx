@@ -4,7 +4,8 @@ import {useGithubUser} from "@/components/providers/git.user.data.provider";
 import {Profile, Spinner, TextBox} from "juny-react-style";
 import styled from "styled-components";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import DynamicSearchBarComponent from "@/components/dynamic/DynamicSearchBar";
+
 const ProfileWrap = styled.div`
     display: flex;
     flex-direction: row;
@@ -38,6 +39,7 @@ function Header(){
                 justify="end"
                 equalSpacing={false}
             >
+                <DynamicSearchBarComponent />
                 <DarkModeButton />
             </BetweenContainer>
         </BetweenContainer>
