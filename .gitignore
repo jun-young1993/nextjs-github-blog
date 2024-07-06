@@ -40,3 +40,4 @@ next-env.d.ts
 .idea
 
 ./public/google1773e5ab10fe8c9c.html
+.package-lock.json
