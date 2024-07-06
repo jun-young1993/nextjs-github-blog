@@ -5,10 +5,11 @@ import {SearchBar} from 'juny-react-style';
 
 const DynamicSearchBar = () => {
     return (
-        <SearchBar
-            $boxShadow={"none"}
-            $backGroundColor={"rgba(0, 0, 0, 0.0)"}
-        />
+        <></>
+        // <SearchBar
+        //     $boxShadow={"none"}
+        //     $backGroundColor={"rgba(0, 0, 0, 0.0)"}
+        // />
         // <SearchBar />
     )
 }
