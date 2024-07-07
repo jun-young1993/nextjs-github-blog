@@ -273,15 +273,39 @@ export async function createIssueComments(issueNumber: number, content: string){
 	return result;
 }
 
+
+
+
 interface TreeInterface {
 	path: string,
 	type: string,
 	sha: string
 }
+
+export async function fetchContentRecursively(path: string): Promise<GithubContentInterface[] | []>
+{
+	let result:GithubContentInterface[] | [] = [];
+	async function fetchContents(path: string){
+		const response = await getContents(path);
+		const contents = response.response;
+		for (const content of contents) {
+			if (content.type === 'dir') {
+				await fetchContents(content.path);
+			} else {
+				result = [...result,...[content]];
+			}
+		}
+	}
+	await fetchContents(path);
+	return result;
+}
+
 export async function fetchTreeRecursively(sha: string): Promise<TreeInterface[] | []> {
 	const url = `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/git/trees/`;
 
+
 	async function fetchTree(sha: string): Promise<{tree: TreeInterface[]}> {
+
 		const response = await fetch(`${url}${sha}?recursive=false`);
 		if (!response.ok) {
 			throw new Error(`Error fetching tree: ${response.statusText}`);
