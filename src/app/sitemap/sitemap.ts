@@ -3,9 +3,14 @@ import APP_CONFIG from "@/utills/config/config";
 import getUserConfig from "@/utills/config/get-user.config";
 import { constants } from 'http2';
 import { GithubContentInterface } from '@/interfaces/github-user.interface';
+import {fetchTreeRecursively} from "@/utills/blog-fetch";
 
 interface SiteMapGenerateType {id: number};
 export const dynamic = 'force-dynamic';
+function decodeUriComponents(url: string) {
+    return url.split('/').map(part => encodeURIComponent(part)).join('/');
+}
+
 export async function generateSitemaps(){
     const githubBlogShowPaths = getUserConfig('githubBlogShowPaths');
     const init:SiteMapGenerateType[] = [{
@@ -16,19 +21,19 @@ export async function generateSitemaps(){
         init.push({
             id: index
         })
-       
+
     }
     return init;
 
 }
 export default async function sitemap({
-    id
-}:{id: number}): Promise<MetadataRoute.Sitemap> {
-    
+                                          id
+                                      }:{id: number}): Promise<MetadataRoute.Sitemap> {
+
     try{
         const {SITE_DOMAIN, APP_END_POINT} = APP_CONFIG;
         let result: MetadataRoute.Sitemap = [];
-        
+
         if(id === 0){
             const userSitemap = getUserConfig('userSitemap');
             if(userSitemap){
@@ -42,12 +47,13 @@ export default async function sitemap({
 
         }else{
             const {type, path} = getUserConfig('githubBlogShowPaths')[id-1]
-            
+
             if(type === 'contents'){
-                
+
                 const contentsResponse = await fetch(APP_END_POINT.repos.contents(path));
                 const contentsResult:GithubContentInterface[] = await contentsResponse.json();
                 const {status: contentStatus, statusText: contentStatusText} = contentsResponse;
+
                 if(contentStatus !== constants.HTTP_STATUS_OK){
                     throw new Error(`Request failed with status ${contentStatus}: ${contentStatusText}`);
                 }
@@ -55,25 +61,49 @@ export default async function sitemap({
                 for(let index=0; contentsResult.length>index; index++){
                     const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName} = contentsResult[index];
                     if(gitFileType === 'dir'){
-                        
+
                         const treeResponse = await fetch(APP_END_POINT.repos.trees(sha)+'?recursive=true');
-                        const treeResult:{tree: {path: string}[]} = await treeResponse.json();
+                        const treeResult:{tree: {path: string, type: string, sha: string}[]} = await treeResponse.json();
+
+
                         const {status:treeStatus, statusText: treeStatusText} = treeResponse;
+
                         if(treeStatus !== constants.HTTP_STATUS_OK){
                             throw new Error(`Request failed with status ${treeStatus}: ${treeStatusText}`);
-                        }       
+                        }
                         for(let treeIndex=0; treeResult.tree.length> treeIndex; treeIndex++){
-                            const {path: gitContentName} = treeResult.tree[treeIndex];
-                            result.push({
-                                url: `${SITE_DOMAIN}/${type}/${gitFolderPath}/${gitContentName}`,
-                                lastModified: new Date(),
-                                changeFrequency: 'yearly' as 'yearly',
-                                priority: 1,
-                            })
+
+                            const {path: gitContentName, type: githubTreeResultType, sha: githubTreeSha} = treeResult.tree[treeIndex];
+                            if(githubTreeResultType === 'tree'){
+                                const treeFiles = await fetchTreeRecursively(sha);
+                                if(treeFiles){
+                                    for(const {path: childrenPath, type: childrenType} of treeFiles){
+                                        const encodingPath = decodeUriComponents(`${gitFolderPath}/${childrenPath}`);
+                                        result.push({
+                                            url: `${SITE_DOMAIN}/${type}/${encodingPath}`,
+                                            lastModified: new Date(),
+                                            changeFrequency: 'yearly' as 'yearly',
+                                            priority: 1,
+                                        })
+
+                                    }
+                                }
+
+                            }else{
+                                const encodingPath = decodeUriComponents(`${gitFolderPath}/${gitContentName}`);
+                                result.push({
+                                    url: `${SITE_DOMAIN}/${type}/${encodingPath}`,
+                                    lastModified: new Date(),
+                                    changeFrequency: 'yearly' as 'yearly',
+                                    priority: 1,
+                                })
+                            }
+
                         }
                     }else{
+                        const encodingPath = decodeUriComponents(`${gitFolderPath}/${gitContentName}`);
                         result.push({
-                            url: `${SITE_DOMAIN}/${type}/${gitFolderPath}/${gitContentName}`,
+                            url: `${SITE_DOMAIN}/${type}/${encodingPath}`,
                             lastModified: new Date(),
                             changeFrequency: 'yearly' as 'yearly',
                             priority: 1,

@@ -25,23 +25,26 @@ interface BlogFetchResponse<T = never>{
 	status: number; statusText?: string, response: T
 }
 const {
+	GIT_HUB_API_URL,
 	GIT_HUB_API_REQUEST_HEADER,
 	GIT_HUB_API_REQUEST_MARKDOWN_HEADER,
 	GIT_HUB_API_END_POINT,
+	GIT_HUB_PERSONAL_REPOSITORY_OWNER,
+	GIT_HUB_PERSONAL_REPOSITORY_NAME
 } = APP_CONFIG;
 export async function blogFetch<T>({
-	endpoint,
-	method = "GET",
-	cache = 'force-cache',
-	headers,
-	body,
-	tags,
-	responseType = 'json',
-	successStatus = [HttpStatus.HTTP_STATUS_OK,HttpStatus.HTTP_STATUS_CREATED]
-	}: BlogFetchInterface
+									   endpoint,
+									   method = "GET",
+									   cache = 'force-cache',
+									   headers,
+									   body,
+									   tags,
+									   responseType = 'json',
+									   successStatus = [HttpStatus.HTTP_STATUS_OK,HttpStatus.HTTP_STATUS_CREATED]
+								   }: BlogFetchInterface
 ): Promise<BlogFetchResponse<T> | never> {
 	try {
-		
+
 		const result = await fetch(endpoint, {
 			method: method,
 			headers: {
@@ -53,7 +56,7 @@ export async function blogFetch<T>({
 			...(tags && { next: { tags} })
 		});
 		const {status, statusText} = result;
-		
+
 		const response = await result[responseType]();
 
 		if(
@@ -125,7 +128,7 @@ async function getGithubContents<T>(path: string, initOptions?: BlogFetchInterfa
 		endpoint: url,
 		headers: GIT_HUB_API_REQUEST_HEADER,
 		next: {revalidate: NEXT_CONFIG.cache.revalidate},
-			...(initOptions && initOptions)
+		...(initOptions && initOptions)
 	});
 
 	return result;
@@ -244,7 +247,7 @@ export async function getIssueComments(
 
 	const { sort = 'updated', direction = 'asc' } = options || {};
 	const url = GIT_HUB_API_END_POINT.repos.comments(issueNumber)+`?sort=${sort}&direction=${direction}&per_page=100&page=${1}`;
-	
+
 	return await blogFetch<GithubIssueCommentInterface[] | []>({
 		endpoint: url,
 		method: "GET",
@@ -252,12 +255,12 @@ export async function getIssueComments(
 		successStatus: [HttpStatus.HTTP_STATUS_OK],
 		tags: [TAGS.comment],
 	})
-	
+
 }
 
 export async function createIssueComments(issueNumber: number, content: string){
 	const url = GIT_HUB_API_END_POINT.repos.comments(issueNumber);
-	
+
 	const result = await blogFetch<GithubIssueCommentInterface>({
 		endpoint: url,
 		method: "POST",
@@ -268,4 +271,40 @@ export async function createIssueComments(issueNumber: number, content: string){
 	})
 	await revalidateTag(TAGS.comment);
 	return result;
+}
+
+interface TreeInterface {
+	path: string,
+	type: string,
+	sha: string
+}
+export async function fetchTreeRecursively(sha: string): Promise<TreeInterface[] | []> {
+	const url = `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/git/trees/`;
+
+	async function fetchTree(sha: string): Promise<{tree: TreeInterface[]}> {
+		const response = await fetch(`${url}${sha}?recursive=false`);
+		if (!response.ok) {
+			throw new Error(`Error fetching tree: ${response.statusText}`);
+		}
+		return response.json();
+	}
+
+	async function getAllFiles(treeSha: string): Promise<TreeInterface[] | []> {
+		const treeResult = await fetchTree(treeSha);
+		let allFiles: TreeInterface[] | [] | any = [];
+
+		for (const item of treeResult.tree) {
+			if (item.type === 'tree') {
+				// Recurse into the tree
+				const subTreeFiles: any = await getAllFiles(item.sha);
+				allFiles = allFiles.concat(subTreeFiles);
+			} else if (item.type === 'blob') {
+				allFiles.push(item);
+			}
+		}
+
+		return allFiles;
+	}
+
+	return await getAllFiles(sha);
 }
