@@ -51,8 +51,9 @@ export default async function sitemap({
                 if(contentStatus !== constants.HTTP_STATUS_OK){
                     throw new Error(`Request failed with status ${contentStatus}: ${contentStatusText}`);
                 }
+                console.log("=>(sitemap.ts:55) contentsResult", contentsResult);
                 for(let index=0; contentsResult.length>index; index++){
-                    const {sha, type: gitFileType, path: gitFolderPath} = contentsResult[index];
+                    const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName} = contentsResult[index];
                     if(gitFileType === 'dir'){
                         
                         const treeResponse = await fetch(APP_END_POINT.repos.trees(sha)+'?recursive=true');
@@ -70,6 +71,13 @@ export default async function sitemap({
                                 priority: 1,
                             })
                         }
+                    }else{
+                        result.push({
+                            url: `${SITE_DOMAIN}/${type}/${gitFolderPath}/${gitContentName}`,
+                            lastModified: new Date(),
+                            changeFrequency: 'yearly' as 'yearly',
+                            priority: 1,
+                        })
                     }
                 }
             }
