@@ -18,6 +18,7 @@ const DynamicGithubComment = ({issueNumber, ...props}:GithubCommentComponentProp
 	const [markdown, setMarkdown] = useState<undefined | string>(undefined);
 	const [isLoading, setIsLoading] = useState<boolean|undefined>(undefined);
 	const handleClickTab = async function(value: ActiveModeType, comment: string){
+			console.log(APP_END_POINT.markdownText());
 		const result = await fetch(APP_END_POINT.markdownText(),{
 			method: "POST",
 			body:JSON.stringify({text: comment})
