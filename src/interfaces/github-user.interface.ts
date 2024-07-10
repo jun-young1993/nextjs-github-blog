@@ -7,7 +7,7 @@ export interface GithubUserInterface {
 
 export interface GithubContentInterface {
 	sha: string
-	type: 'file'|'dir'
+	type: 'file'|'dir' | 'tree'
 	name: string
 	encoding: string
 	content: string

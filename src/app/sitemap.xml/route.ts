@@ -1,4 +1,3 @@
-import getUserConfig from "@/utills/config/get-user.config";
 import APP_CONFIG from "@/utills/config/config";
 import { generateSitemaps } from "../sitemap/sitemap";
 
@@ -12,7 +11,7 @@ export async function GET(){
     const sitemapIndexXML = `<?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         ${sitemaps.map(({id}) => {
-            return generateSitemapLink(`${SITE_DOMAIN}/sitemap/sitemap.xml/${id}`)
+            return generateSitemapLink(process.env.NODE_ENV === 'development' ? `${SITE_DOMAIN}/sitemap/sitemap.xml/${id}`:`${SITE_DOMAIN}/sitemap/sitemap/${id}.xml`)
         })}
     </sitemapindex>`;
     return new Response(sitemapIndexXML, {
