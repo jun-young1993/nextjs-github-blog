@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "@next/third-parties": "^14.2.3",
-    "juny-react-style": "^1.9.61",
+    "juny-react-style": "^1.9.63",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "react-github-issue": "^1.0.17",
-    "react-symbol": "^1.2.14",
+    "react-symbol": "^1.4.15",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {
