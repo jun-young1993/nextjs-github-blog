@@ -23,7 +23,9 @@ function Footer() {
                 width: "100%"
             }}
         >
-        <MacMenuBar>
+        <MacMenuBar
+            
+        >
             {githubBlogShowPaths && githubBlogShowPaths.map(({path, type, src, title: configTitle}, index) => {
                 const title  = configTitle ?? path.split('/').at(-1) as string | undefined;
 

@@ -3,7 +3,7 @@ import APP_CONFIG, {NEXT_CONFIG} from "./config/config";
 import HttpStatus from "./defined/http-status";
 import {isBlogError } from "./type-guard";
 
-import {GithubContentInterface, GithubIssueCommentInterface, GithubIssueInterface, GithubUserInterface} from "@/interfaces/github-user.interface";
+import {GithubContentInterface, GithubIssueCommentInterface, GithubIssueInterface, GithubSearchInterface, GithubUserInterface} from "@/interfaces/github-user.interface";
 import { revalidateTag } from "next/cache";
 import TAGS from "./defined/tags";
 
@@ -28,6 +28,7 @@ const {
 	GIT_HUB_API_URL,
 	GIT_HUB_API_REQUEST_HEADER,
 	GIT_HUB_API_REQUEST_MARKDOWN_HEADER,
+	GIT_HUB_API_REQUEST_TEXT_MATCH_HEADER,
 	GIT_HUB_API_END_POINT,
 	GIT_HUB_PERSONAL_REPOSITORY_OWNER,
 	GIT_HUB_PERSONAL_REPOSITORY_NAME
@@ -73,9 +74,10 @@ export async function blogFetch<T>({
 	} catch (e) {
 
 		if (isBlogError(e)) {
+			
 			throw {
 				status: e.status || 500,
-				statusText: e.statusText?.toString() || 'unknown',
+				statusText: e.toString() || 'unknown',
 			};
 		}
 		throw {
@@ -273,6 +275,25 @@ export async function createIssueComments(issueNumber: number, content: string){
 	return result;
 }
 
+export async function searchCode(query: string){
+	if(query.length >= 2){
+		const url = `${GIT_HUB_API_URL}/search/code?q=${query}+repo:${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}`
+		console.log(url);
+
+		const result = await blogFetch<GithubSearchInterface>({
+			endpoint: url,
+			method: "GET",
+			headers: GIT_HUB_API_REQUEST_TEXT_MATCH_HEADER,
+			successStatus: [HttpStatus.HTTP_STATUS_OK],
+			cache: 'no-store'
+		})
+		return result;
+	}
+	return {
+		items: []
+	};
+	
+}
 
 
 

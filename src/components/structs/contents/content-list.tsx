@@ -3,8 +3,6 @@ import {TreeList, TreeListProps, TreeHeader} from "juny-react-style";
 import {useRouter} from "next/navigation";
 import styled from "styled-components";
 import {GithubContentInterface} from "@/interfaces/github-user.interface";
-import {Fragment} from "react";
-import { GithubBlogShowPathTypeEnum } from "@/utills/config/config.type";
 import SplitLinkTitle from "@/components/ui/SplitLInkTitle";
 
 interface ContentListProps  {

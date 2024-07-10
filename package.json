@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^14.2.3",
-    "juny-react-style": "^1.9.60",
+    "juny-react-style": "^1.9.61",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",

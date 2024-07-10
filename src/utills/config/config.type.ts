@@ -10,6 +10,7 @@ export interface AppConfigType {
     GIT_HUB_PERSONAL_REPOSITORY_OWNER: string
     GIT_HUB_API_REQUEST_HEADER: HeadersInit
     GIT_HUB_API_REQUEST_MARKDOWN_HEADER: HeadersInit
+    GIT_HUB_API_REQUEST_TEXT_MATCH_HEADER: HeadersInit,
     GOOGLE_ANALYTICS_SCRIPT_SRC?: string
     GIT_HUB_API_END_POINT: {
         repos: {

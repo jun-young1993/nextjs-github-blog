@@ -12,7 +12,7 @@ const ContainerLayoutWrapStyled = styled.div`
       justify-content: center;
       align-items: center;
 `
-const ContainerLayoutStyled = styled.div`
+export const ContainerLayoutStyled = styled.div`
   height: calc(100% - 0.5rem);
   width: calc(100% - 3rem);
   display: flex;

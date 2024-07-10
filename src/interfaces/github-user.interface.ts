@@ -25,3 +25,13 @@ export interface GithubIssueCommentInterface {
 	updated_at: Date
 	created_at: Date
 }
+export interface GIthubSearchItemInterface {
+	name: string,
+	path: string
+}
+export interface GithubSearchInterface{
+	response: {
+		items: GIthubSearchItemInterface[]
+	}
+	
+}
