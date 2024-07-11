@@ -38,7 +38,9 @@ export default async function Page({ params }: Params){
         if(title && title?.endsWith(".md")){
             title = title.slice(0,-3);
         }
+        
         const {response: data} = await convertToGithubMarkDownByContent(path);
+        
         return (
             <ContainerLayout
                 {...container}
@@ -56,7 +58,7 @@ export default async function Page({ params }: Params){
 
         )
     }catch(error){
-        return <div></div>
+        return <div>{error?.toString()}</div>
     }
 
 }

@@ -10,11 +10,10 @@ import { KeyIcon } from 'react-symbol';
 const SearchModalWrap = styled.div`
     display:flex;
     flex-direction: column;
-    // gap: 1rem;
     margin 0 auto;
     width: 100vh;
     height: 100vh;
-    // max-width: 70%;
+    max-width: 100%;
     max-height: 70%;
 `
 const DynamicSearchBar = () => {
@@ -51,26 +50,26 @@ const DynamicSearchBar = () => {
             />
             {isShow
             && <StyledAlert
-                    $opacity={"80%"}
+                    $opacity={"none"}
                     position={"top-center"}
                     $animation={false}
                 >
-                    <MacContainerHeader
-                            title={<KeyIcon
-                                viewBox='0 0 12 12'
-                                width='12'
-                                height='20'
-                            >ESC</KeyIcon>}
-                            showHidden={false}
-                            showMinimize={false}
-                            onClose={() => setIsShow(!isShow)}
-                    />
+
                     <SearchModalWrap>
+                        <MacContainerHeader
+                                title={<KeyIcon
+                                    viewBox='0 0 12 12'
+                                    width='25px'
+                                    height='25px'
+                                >ESC</KeyIcon>}
+                                showHidden={false}
+                                showMinimize={false}
+                                onClose={() => setIsShow(!isShow)}
+                        />
                         <SearchBar 
                             $cursor='pointer'
                             onSearch={handleOnSearch}
                             $onKeyUp={(e,query) => {
-                                console.log(e.code);
                                 if(e.code === 'Enter'){
                                     handleOnSearch(query);
                                 }
@@ -82,10 +81,10 @@ const DynamicSearchBar = () => {
                         <TreeList
                             title={isLoading && <Spinner />}
                             items={items.map((item) => {
-                                return {
-                                    userData: item,
-                                    title: item.name
-                                }
+                                    return {
+                                        userData: item,
+                                        title: item.name
+                                    }
                             })}
                             onClick={(item) => {
                                 if(item.userData){

@@ -57,22 +57,23 @@ export async function blogFetch<T>({
 			...(tags && { next: { tags} })
 		});
 		const {status, statusText} = result;
-
+		
 		const response = await result[responseType]();
 
 		if(
 			!successStatus.includes(status)
 		){
+			
 			throw new Error(`Request failed with status ${status}: ${statusText}`);
 		}
-
+		
 		return {
 			statusText: statusText,
 			status: status,
 			response
 		};
 	} catch (e) {
-
+		
 		if (isBlogError(e)) {
 			
 			throw {
@@ -132,30 +133,35 @@ async function getGithubContents<T>(path: string, initOptions?: BlogFetchInterfa
 		next: {revalidate: NEXT_CONFIG.cache.revalidate},
 		...(initOptions && initOptions)
 	});
-
+	
 	return result;
 
 }
 
-export async function getContent(path: string, initOptions?: BlogFetchInterface){
-	return getGithubContents<GithubContentInterface>(path, initOptions);
+export async function getContent<T = GithubContentInterface>(path: string, initOptions?: BlogFetchInterface){
+	return getGithubContents<T>(path, initOptions);
 }
 
 export async function getContents(path: string){
 	return getGithubContents<GithubContentInterface[]>(path);
 }
 
-export async function convertToGithubMarkDownByContent(path: string){
+export async function convertToGithubMarkDownByContent(path: string)
+{
 	if(!path.endsWith('.md')){
 		throw new Error('This is not a Markdown page.')
 	}
-	const {response: data} = await getContent(path);
-	if(typeof data !== 'object'){
-		throw new Error('This is not object');
-	}
-	const encoding = data.encoding as BufferEncoding;
-	let text = Buffer.from(data.content, encoding).toString('utf8');
-	return await convertToGithubMarkDown(text);
+
+	const response = await getContent<string>(path,{
+		endpoint: GIT_HUB_API_END_POINT.repos.contents(path),
+		method: "GET",
+		responseType: 'text',
+		successStatus: [HttpStatus.HTTP_STATUS_OK],
+		headers: GIT_HUB_API_REQUEST_MARKDOWN_HEADER,
+	});
+	
+	return response ;
+
 
 }
 
@@ -278,7 +284,7 @@ export async function createIssueComments(issueNumber: number, content: string){
 export async function searchCode(query: string){
 	if(query.length >= 2){
 		const url = `${GIT_HUB_API_URL}/search/code?q=${query}+repo:${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}`
-		console.log(url);
+		
 
 		const result = await blogFetch<GithubSearchInterface>({
 			endpoint: url,

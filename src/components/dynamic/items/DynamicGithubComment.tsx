@@ -13,12 +13,10 @@ interface GithubCommentComponentProps extends GithubCommentProps {
 const DynamicGithubComment = ({issueNumber, ...props}:GithubCommentComponentProps) => {
 	const {APP_END_POINT} = APP_CONFIG;
 	const router = useRouter();
-	const pathname = usePathname();
 	const [active, setActive] = useState<ActiveModeType>(ActiveMode.WRITE);
 	const [markdown, setMarkdown] = useState<undefined | string>(undefined);
 	const [isLoading, setIsLoading] = useState<boolean|undefined>(undefined);
 	const handleClickTab = async function(value: ActiveModeType, comment: string){
-			console.log(APP_END_POINT.markdownText());
 		const result = await fetch(APP_END_POINT.markdownText(),{
 			method: "POST",
 			body:JSON.stringify({text: comment})
