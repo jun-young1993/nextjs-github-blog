@@ -92,7 +92,7 @@ export default async function sitemap({
                         }
 
                     }else{
-                        const encodingPath = decodeUriComponents(`${gitFolderPath}/${gitContentName}`);
+                        const encodingPath = decodeUriComponents(`${gitFolderPath}`);
                         result.push({
                             url: `${SITE_DOMAIN}/${redirectContentType}/${encodingPath}`,
                             lastModified: new Date(),
