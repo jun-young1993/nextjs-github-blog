@@ -42,7 +42,8 @@ export const GithubBlogShowPathTypeEnum  = {
     CONTENTS: 'contents',
     PROFILE:'profile',
     MARKDOWN: 'markdown-viewer',
-    ISSUE: 'issue'
+    ISSUE: 'issue',
+    DIRECTORIES: 'directories'
 } as const;
 export type GithubBlogShowPathType = typeof GithubBlogShowPathTypeEnum [keyof typeof GithubBlogShowPathTypeEnum];
 export enum GithubBlogShowPathSrc {

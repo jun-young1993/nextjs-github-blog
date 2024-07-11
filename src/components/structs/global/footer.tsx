@@ -3,11 +3,16 @@ import {MacMenuBar, MacMenuBarItem} from 'juny-react-style';
 import {useRouter} from "next/navigation";
 import getUserConfig from "@/utills/config/get-user.config";
 import { useGithubUser } from '@/components/providers/git.user.data.provider';
-import { GithubBlogShowPathSrc } from '@/utills/config/config.type';
+import { GithubBlogShowPath, GithubBlogShowPathSrc } from '@/utills/config/config.type';
 import {footerId} from "@/utills/defined/dom-id";
 
-function Footer() {
-    const githubBlogShowPaths = getUserConfig('githubBlogShowPaths');
+interface FooterProps {
+    githubBlogShowPaths: GithubBlogShowPath[]
+}
+function Footer({githubBlogShowPaths}: FooterProps) {
+    
+    
+    
     const router = useRouter();
     const {userData} = useGithubUser();
     const srcHandler = (src: string | undefined): string | undefined => {

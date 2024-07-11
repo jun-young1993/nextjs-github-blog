@@ -17,6 +17,7 @@ import {
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from "next/script";
 import {ReactNode, Suspense} from "react";
+import getGithubBlogShowPaths from "@/utills/config/get-git-blog-show-path";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,7 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
 
+  const footerMenus = await getGithubBlogShowPaths();
   
 
   return (
@@ -50,10 +52,10 @@ export default async function RootLayout({
             <Suspense fallback={<p>Loading feed...</p>}>
               <UserDataProvider>
                 <StyleThemeProvider>
-                      <RootLayoutWrapProvider>
-
+                      <RootLayoutWrapProvider
+                        githubBLogShowPaths={footerMenus}
+                      >
                             {children}
-
                       </RootLayoutWrapProvider>
                 </StyleThemeProvider>
               </UserDataProvider>

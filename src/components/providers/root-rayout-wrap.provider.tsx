@@ -4,12 +4,15 @@ import {ReactNode} from 'react'
 import { Screen } from 'juny-react-style';
 import Header from "@/components/structs/global/header";
 import Footer from "@/components/structs/global/footer";
-
-export default function RootLayoutWrapProvider({
-    children
-}: {
+import { GithubBlogShowPath } from '@/utills/config/config.type';
+interface RootLayoutProps {
     children: ReactNode | any
-}) {
+    githubBLogShowPaths: GithubBlogShowPath[]
+}
+export default function RootLayoutWrapProvider({
+    children,
+    githubBLogShowPaths
+}:RootLayoutProps) {
 
     return (
         <Screen
@@ -18,7 +21,9 @@ export default function RootLayoutWrapProvider({
         >
             <Header />
             {children}
-            <Footer />
+            <Footer
+                githubBlogShowPaths={githubBLogShowPaths} 
+            />
         </Screen>
     )
 }

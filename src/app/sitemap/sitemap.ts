@@ -4,6 +4,7 @@ import getUserConfig from "@/utills/config/get-user.config";
 import { constants } from 'http2';
 import { GithubContentInterface } from '@/interfaces/github-user.interface';
 import {fetchContentRecursively, fetchTreeRecursively} from "@/utills/blog-fetch";
+import getGithubBlogShowPaths from '@/utills/config/get-git-blog-show-path';
 
 interface SiteMapGenerateType {id: number};
 export const dynamic = 'force-dynamic';
@@ -12,7 +13,7 @@ function decodeUriComponents(url: string) {
 }
 
 export async function generateSitemaps(){
-    const githubBlogShowPaths = getUserConfig('githubBlogShowPaths');
+    const githubBlogShowPaths = await getGithubBlogShowPaths();
     const init:SiteMapGenerateType[] = [{
         id: 0,
     }];

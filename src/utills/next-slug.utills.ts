@@ -19,6 +19,8 @@ export const nextSlugGeneratePaths = (slug?: string[]): string[] | []=>  {
 
 export const shouldIgnorePath = (path: string) => {
     const ignorePaths = getUserConfig('ignorePaths');
+    ignorePaths?.push(/^_cache(\/.*)?$/)
+    // ignorePaths?.push(/^images(\/.*)?$/)
     if(ignorePaths){
         return ignorePaths.some(regex => regex.test(path));
     }
