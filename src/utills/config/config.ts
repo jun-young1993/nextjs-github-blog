@@ -63,8 +63,8 @@ const APP_CONFIG: AppConfigType = {
             cacheContent: (path: string) => {
                 return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/_cache/${path && (path+'/')}cache.md`;
             },
-            contents: (path: string) => {
-                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/${path}`;
+            contents: (path: string, repository?: string) => {
+                return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${repository ?? GIT_HUB_PERSONAL_REPOSITORY_NAME}/contents/${path}`;
             },
             trees: (treeSha: string) => {
                 return `${GIT_HUB_API_URL}/repos/${GIT_HUB_PERSONAL_REPOSITORY_OWNER}/${GIT_HUB_PERSONAL_REPOSITORY_NAME}/git/trees/${treeSha}`;

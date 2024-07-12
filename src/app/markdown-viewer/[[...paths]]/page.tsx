@@ -31,16 +31,16 @@ export async function generateMetadata(
 
 export default async function Page({ params }: Params){
     try{
-        const {paths, container} = params;
+        const {paths, container, repository} = params;
         const path = nextSlugGitContentsPath(paths);
         
         let title = Array.from<string>(path.split('/')).at(-1) as string | undefined;
         if(title && title?.endsWith(".md")){
             title = title.slice(0,-3);
         }
-        
-        const {response: data} = await convertToGithubMarkDownByContent(path);
-        
+
+        const {response: data} = await convertToGithubMarkDownByContent(path,repository);
+
         return (
             <ContainerLayout
                 {...container}

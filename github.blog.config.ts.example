@@ -35,6 +35,9 @@ const userConfig = GithubBlogConfig({
         type: 'issue',
         path: '/',
         title: 'Issue'
+    },{
+        type: 'repository-contents',
+        path: 'react-style/docs'
     }],
     userSitemap: [
         'ads.txt'

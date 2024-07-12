@@ -17,7 +17,7 @@ export interface AppConfigType {
             issues: (issueNumber?: number) => string
             comments: (issueNumber: number) => string
             cacheContent: (path: string) => string
-            contents: (path: string) => string
+            contents: (path: string, repository?: string) => string
             trees: (treeSha: string) => string
             readme: (repo: string) => string,
             images: (path: string) => string
@@ -27,7 +27,7 @@ export interface AppConfigType {
     }
     APP_END_POINT: {
         repos: {
-            contents: (path: string) => string
+            contents: (path: string, repository?: string) => string
             trees: (treeSha: string) => string
             readme: (repo: string) => string,
             comments: (issueNumber: number) => string

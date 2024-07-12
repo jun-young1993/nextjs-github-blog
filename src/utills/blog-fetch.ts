@@ -125,8 +125,13 @@ export async function getGithubUser()
 	});
 
 }
-async function getGithubContents<T>(path: string, initOptions?: BlogFetchInterface){
-	const url = GIT_HUB_API_END_POINT.repos.contents(path);
+async function getGithubContents<T>(path: string | {path: string, repository?: string}, initOptions?: BlogFetchInterface){
+	let repository;
+	if(typeof path === 'object'){
+		repository = path.repository;
+		path = path.path;
+	}
+	const url = GIT_HUB_API_END_POINT.repos.contents(path,repository);
 	const result = await blogFetch<T>({
 		endpoint: url,
 		headers: GIT_HUB_API_REQUEST_HEADER,
@@ -142,18 +147,18 @@ export async function getContent<T = GithubContentInterface>(path: string, initO
 	return getGithubContents<T>(path, initOptions);
 }
 
-export async function getContents(path: string){
+export async function getContents(path: string | {path: string, repository?: string}){
 	return getGithubContents<GithubContentInterface[]>(path);
 }
 
-export async function convertToGithubMarkDownByContent(path: string)
+export async function convertToGithubMarkDownByContent(path: string, repository?: string)
 {
 	if(!path.endsWith('.md')){
 		throw new Error('This is not a Markdown page.')
 	}
 
 	const response = await getContent<string>(path,{
-		endpoint: GIT_HUB_API_END_POINT.repos.contents(path),
+		endpoint: GIT_HUB_API_END_POINT.repos.contents(path,repository),
 		method: "GET",
 		responseType: 'text',
 		successStatus: [HttpStatus.HTTP_STATUS_OK],
