@@ -2,9 +2,7 @@
 import { PathsPageParams } from "@/interfaces/root-page.interface";
 import {GithubBlogShowPath, GithubBlogShowPathTypeEnum} from "@/utills/config/config.type";
 import getUserConfig from "@/utills/config/get-user.config";
-
 import dynamic from "next/dynamic";
-import DynamicAlertComponent from "@/components/dynamic/DynamicAlert";
 
 
 const MarkdownViewer = dynamic(() => 
@@ -44,23 +42,7 @@ export default function Home() {
   return (
     <>
       <MainComponent mainPage={userMainPage} />
-      
-      {/* alert 기능 보류 */}
-      {/* {userMainPage?.alert &&
-          <DynamicAlertComponent
-              level={userMainPage?.alertLevel ?? 'secondary'}
-          >
-            {userMainPage?.alert?.map((alert, index) => {
-              return <MainComponent
-                  key={alert.githubBlogShowPath.toString()}
-                  mainPage={alert?.githubBlogShowPath}
-              />
-            })}
-          </DynamicAlertComponent>
-      } */}
-
-
-        
+           
     </>
   )
 }

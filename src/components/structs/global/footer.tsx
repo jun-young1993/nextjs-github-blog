@@ -41,7 +41,6 @@ function Footer({githubBlogShowPaths}: FooterProps) {
                         onClick={() => {
                             router.push(`/${type}/${path}`)
                         }}
-                        // src={"https://avatars.githubusercontent.com/u/102360897?v=4"}
                         title={title || 'no name'}
                     />
                 )
