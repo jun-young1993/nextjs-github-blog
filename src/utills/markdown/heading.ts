@@ -24,7 +24,12 @@ export default function replaceHeadings(content: string): [string, HeadingToc[]]
 				id: uniqId
 			} as HeadingToc;
 			toc.push(tocItem);
-			return `<h${level} id="${uniqId}" class="heading-element">${replaceValue}</h${level}>`;	
+			return `
+				<span id="${uniqId}" >
+				${searchValue}
+				</span>
+			`
+			// return `<h${level} id="${uniqId}" class="heading-element">${replaceValue}</h${level}>`;
 		}
 		
 		return searchValue;
