@@ -28,6 +28,7 @@ export interface AppConfigType {
     APP_END_POINT: {
         repos: {
             contents: (path: string, repository?: string) => string
+            repositoryContents: (path: string, repository?: string) => string
             trees: (treeSha: string) => string
             readme: (repo: string) => string,
             comments: (issueNumber: number) => string

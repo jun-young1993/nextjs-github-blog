@@ -88,6 +88,9 @@ const APP_CONFIG: AppConfigType = {
             contents: (path: string) => {
                 return `${SITE_DOMAIN}/api/github/contents/${path}`;
             },
+            repositoryContents: (path: string) => {
+                return `${SITE_DOMAIN}/api/github/repository-contents/${path}`;
+            },
             trees: (treeSha: string) => {
                 return `${SITE_DOMAIN}/api/github/trees/${treeSha}`;
             },

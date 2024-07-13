@@ -5,6 +5,7 @@ import { constants } from 'http2';
 import { GithubContentInterface } from '@/interfaces/github-user.interface';
 import {fetchContentRecursively, fetchTreeRecursively} from "@/utills/blog-fetch";
 import getGithubBlogShowPaths from '@/utills/config/get-git-blog-show-path';
+import {GithubBlogShowPathTypeEnum} from "@/utills/config/config.type";
 
 interface SiteMapGenerateType {id: number};
 export const dynamic = 'force-dynamic';
@@ -49,7 +50,7 @@ export default async function sitemap({
         }else{
             const {type, path} = getUserConfig('githubBlogShowPaths')[id-1]
 
-            if(type === 'contents'){
+            if(type === GithubBlogShowPathTypeEnum.CONTENTS){
                 const redirectContentType = 'markdown-viewer';
                 const contentsResponse = await fetch(APP_END_POINT.repos.contents(path));
                 const contentsResult:GithubContentInterface[] = await contentsResponse.json();
@@ -102,6 +103,35 @@ export default async function sitemap({
                         })
                     }
                 }
+            }
+            if(type === GithubBlogShowPathTypeEnum.REPOSITORY_CONTENTS){
+``
+                const [repository] = path.split('/')
+                const redirectContentType = `repository-markdown-viewer/${repository}`;
+
+                const contentsResponse = await fetch(APP_END_POINT.repos.repositoryContents(path));
+                const contentsResult:GithubContentInterface[] = await contentsResponse.json();
+                const {status: contentStatus, statusText: contentStatusText} = contentsResponse;
+                if(contentStatus !== constants.HTTP_STATUS_OK){
+                    throw new Error(`Request failed with status ${contentStatus}: ${contentStatusText}`);
+                }
+                // console.log("=>(sitemap.ts:119) contentsResult", contentsResult);
+                for(let index=0; contentsResult.length>index; index++) {
+                    const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName} = contentsResult[index];
+                    console.log("=>(sitemap.ts:121) gitFileType", gitFileType);
+                    if(gitFileType === 'dir'){
+
+                    }else{
+                        const encodingPath = decodeUriComponents(`${gitFolderPath}`);
+                        result.push({
+                            url: `${SITE_DOMAIN}/${redirectContentType}/${encodingPath}`,
+                            lastModified: new Date(),
+                            changeFrequency: 'yearly' as 'yearly',
+                            priority: 1,
+                        })
+                    }
+                }
+
             }
         }
         return result;
