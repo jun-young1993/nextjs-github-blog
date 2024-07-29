@@ -5,7 +5,7 @@ import {GithubContentInterface} from "@/interfaces/github-user.interface";
 import {nextSlugGitContentsPath} from "@/utills/next-slug.utills";
 type Params = {
     params: {
-        paths?: [] | string[]
+        paths: [] | string[]
     }
 }
 
