@@ -14,9 +14,10 @@ const TitleWrapStyled = styled.div<SplitLinkTitleProps>`
 interface SplitLinkTitleProps {
 	paths?: string[] | []
 	justify?: string
+	repository?: string
 }
 
-function SplitLinkTitle({paths, justify}: SplitLinkTitleProps){
+function SplitLinkTitle({paths, justify, repository}: SplitLinkTitleProps){
 	const router = useRouter();
 	return (
 		<TitleWrapStyled justify={justify}>
@@ -30,7 +31,7 @@ function SplitLinkTitle({paths, justify}: SplitLinkTitleProps){
 							{(index > 0) && <span>{`\u202F/\u202F`}</span>}
 							<TreeHeader
 								onClick={() => {
-									router.push(`/${GithubBlogShowPathTypeEnum.CONTENTS}/${path}`);
+									router.push(`/${repository ? GithubBlogShowPathTypeEnum.REPOSITORY_CONTENTS : GithubBlogShowPathTypeEnum.CONTENTS}/${path}`);
 								}}
 							>
 								{decodeURIComponent(path.split('/').at(-1) as string)}

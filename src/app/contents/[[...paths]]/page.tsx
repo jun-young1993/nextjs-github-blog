@@ -12,11 +12,15 @@ interface Params extends PathsPageParams{
 }
 
 export default async function Page({ params }:Params) {
-    const {paths:pathArray, container} = params;
+    const {paths:pathArray, container, repository} = params;
+
     const path = nextSlugGitContentsPath(pathArray);
     const paths = nextSlugGeneratePaths(pathArray);
 
-    const {response:data} = await getContents(path);
+    const {response:data} = await getContents({
+        path: path,
+        repository: repository
+    });
 
     if(!Array.isArray(data)){
         redirect(`/markdown-viewer/${path}`);
@@ -35,6 +39,7 @@ export default async function Page({ params }:Params) {
                         title: item.name
                     }
                 })}
+                repository={repository}
             />}
         </ContainerLayout>
     )
