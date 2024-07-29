@@ -24,6 +24,11 @@ export async function generateMetadata(
     const parentMetadata = await parent ?? {};
     const metadata = Promise.resolve(Object.assign({},parentMetadata,{
         title: title,
+        description: title,
+        openGraph: {
+            title: title,
+            description: title,
+        }
     })) as Promise<Metadata>;
 
     return metadata;
