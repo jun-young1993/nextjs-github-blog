@@ -61,11 +61,12 @@ export default async function sitemap({
                 }
 
                 for(let index=0; contentsResult.length>index; index++){
-                    const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName} = contentsResult[index];
-
+                    const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName, url} = contentsResult[index];
+                    const {headers} = await fetch(url);
                     if(gitFileType === 'dir'){
 
                         const dirContents = await fetchContentRecursively(gitFolderPath);
+
                         for(const githubContent of dirContents){
                             if(githubContent.type === 'tree') {
                                 const treeFiles = await fetchTreeRecursively(sha);
@@ -74,7 +75,7 @@ export default async function sitemap({
                                         const encodingPath = decodeUriComponents(`${gitFolderPath}/${childrenPath}`);
                                         result.push({
                                             url: `${SITE_DOMAIN}/${redirectContentType}/${encodingPath}`,
-                                            lastModified: new Date(),
+                                            lastModified: new Date(headers.get('last-modified')),
                                             changeFrequency: 'yearly' as 'yearly',
                                             priority: 1,
                                         })
@@ -86,7 +87,7 @@ export default async function sitemap({
                                 const encodingPath = decodeUriComponents(`${githubContent.path}`);
                                 result.push({
                                     url: `${SITE_DOMAIN}/${redirectContentType}/${encodingPath}`,
-                                    lastModified: new Date(),
+                                    lastModified: new Date(headers.get('last-modified')),
                                     changeFrequency: 'yearly' as 'yearly',
                                     priority: 1,
                                 })
@@ -97,7 +98,7 @@ export default async function sitemap({
                         const encodingPath = decodeUriComponents(`${gitFolderPath}`);
                         result.push({
                             url: `${SITE_DOMAIN}/${redirectContentType}/${encodingPath}`,
-                            lastModified: new Date(),
+                            lastModified: new Date(headers.get('last-modified')),
                             changeFrequency: 'yearly' as 'yearly',
                             priority: 1,
                         })
@@ -111,21 +112,24 @@ export default async function sitemap({
 
                 const contentsResponse = await fetch(APP_END_POINT.repos.repositoryContents(path));
                 const contentsResult:GithubContentInterface[] = await contentsResponse.json();
+
                 const {status: contentStatus, statusText: contentStatusText} = contentsResponse;
                 if(contentStatus !== constants.HTTP_STATUS_OK){
                     throw new Error(`Request failed with status ${contentStatus}: ${contentStatusText}`);
                 }
-                // console.log("=>(sitemap.ts:119) contentsResult", contentsResult);
                 for(let index=0; contentsResult.length>index; index++) {
-                    const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName} = contentsResult[index];
-                    console.log("=>(sitemap.ts:121) gitFileType", gitFileType);
+
+                    const {sha, type: gitFileType, path: gitFolderPath, name: gitContentName, url} = contentsResult[index];
+                    const {headers} = await fetch(url);
+
+
                     if(gitFileType === 'dir'){
 
                     }else{
                         const encodingPath = decodeUriComponents(`${gitFolderPath}`);
                         result.push({
                             url: `${SITE_DOMAIN}/${redirectContentType}/${encodingPath}`,
-                            lastModified: new Date(),
+                            lastModified: new Date(headers.get('last-modified')),
                             changeFrequency: 'yearly' as 'yearly',
                             priority: 1,
                         })
